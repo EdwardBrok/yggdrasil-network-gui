@@ -1,0 +1,84 @@
+object FormGetPeers: TFormGetPeers
+  Left = 0
+  Height = 346
+  Top = 695
+  Width = 1097
+  Caption = 'FormGetPeers'
+  ClientHeight = 346
+  ClientWidth = 1097
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '3.8.0.0'
+  object ListView1: TListView
+    Left = 8
+    Height = 293
+    Top = 8
+    Width = 1081
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Columns = <    
+      item
+        Caption = 'URI'
+        Width = 300
+      end    
+      item
+        Caption = 'State'
+      end    
+      item
+        Caption = 'Dir'
+      end    
+      item
+        Caption = 'IP Address'
+        Width = 300
+      end    
+      item
+        Caption = 'Uptime'
+        Width = 100
+      end    
+      item
+        Caption = 'RTT'
+        Width = 70
+      end    
+      item
+        Caption = 'RX'
+      end    
+      item
+        Caption = 'TX'
+      end    
+      item
+        Caption = 'Down'
+        Width = 60
+      end    
+      item
+        Caption = 'Up'
+      end    
+      item
+        Caption = 'Pr'
+      end    
+      item
+        Caption = 'Cost'
+      end    
+      item
+        Caption = 'Last Error'
+        Width = 197
+      end>
+    GridLines = True
+    Items.LazData = {
+      9100000001000000FFFFFFFFFFFFFFFFFFFFFFFF0C00000015000000D09FD0BE
+      D0B4D0BED0B6D0B4D0B8D182D0B52E2E2E000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    }
+    ParentShowHint = False
+    ReadOnly = True
+    RowSelect = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+    ViewStyle = vsReport
+  end
+  object UpdatePeersTableTimer: TTimer
+    OnTimer = UpdatePeersTableTimerTimer
+    Left = 65504
+    Top = 32
+  end
+end

@@ -1,0 +1,149 @@
+object FormMain: TFormMain
+  Left = 1682
+  Height = 283
+  Top = 395
+  Width = 238
+  Caption = 'FormMain'
+  Position = poScreenCenter
+  LCLVersion = '4.0.0.4'
+  WindowState = wsMinimized
+  OnCreate = FormCreate
+  object TrayIcon1: TTrayIcon
+    PopUpMenu = PopupMenu1
+    Icon.Data = {
+      7E04000000000100010010100000010020006804000016000000280000001000
+      0000200000000100200000000000000400006400000064000000000000000000
+      00009BC249FF9BC248FFD6E5B4FF9CC451FF9BC24BFF9AC249FF9BC249FF9BC2
+      4BFF99C249FF9BC249FF9BC249FF9BC249FF9BC249FF9AC249FF9BC049FF9BC2
+      49FF9CC649FF9EC64BFFB2D271FFB9D57DFF9EC54BFF9EC64BFF9EC44BFF9FC6
+      4BFF9EC64BFF9EC64BFF9EC64BFF9EC64BFF9EC64BFF9EC749FF9EC74BFF9EC6
+      4BFFA1CA4DFFA0CA4DFFA0CA4CFFCCE29FFFBFDB87FFC8E098FFC1DC8CFFACD0
+      64FFA0CA4CFFA2CA4CFFA0CA4CFFA1CA4CFFA0CA4CFFA1CA4CFFA1CA4CFFA0CA
+      4EFFA2CE4EFFA2CE4EFFA3CE4EFFD2E7ABFFFFFFFEFFFFFFFFFFFFFFFFFFFEFE
+      FEFFE7F3D2FFB0D56BFFA2CD4EFFA2CD4CFFA2CD4EFFA2CF4EFFA2CF4EFFA2CD
+      4EFFA5D150FFA5D150FFA5D150FFDDEEBEFFFFFFFFFFFFFFFEFFFFFFFFFFFFFF
+      FFFFFFFFFFFFF9FCF7FFB8DA75FFA5D150FFA5D050FFA7D150FFA5D150FFA5D3
+      50FFA7D552FFA7D552FFA7D552FFDCEEBBFFFFFFFFFFFFFEFFFFFFFFFFFFFFFE
+      FFFFFDFFFFFFFFFFFEFFF4F9E9FFACD75BFFA7D552FFA7D552FFA7D552FFA7D5
+      52FFAADB53FFAAD951FFABD953FFC5E68EFFFFFFFEFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFEFFFFFFFFFFFFFFFFFFFFD3EBA8FFA9D853FFA9D952FFA9D953FFA9D9
+      53FFACDD57FFAEDF55FFACDD55FFADDF58FFECF7DAFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFEFFFFFFFFFCFFFFFFFFFDFFF6FBEDFFADDD57FFACDD55FFACDE55FFAEDD
+      55FFAEE154FFAEE157FFAEE157FFAEE157FFB6E365FFEFF9DEFFFDFFFFFFFDFF
+      FFFFFFFFFFFFFEFDFFFFFFFFFFFFFFFFFFFFC0E77DFFAEE055FFAEE157FFAEE1
+      56FFB2E559FFB0E459FFB2E459FFB0E459FFB0E459FFB3E55EFFD8F2B0FFFCFE
+      F9FFFEFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFD5F0A6FFB0E459FFB0E459FFB3E4
+      58FFB3E85AFFB3E85AFFB1E95AFFB3E85AFFB3E85AFFB3E85AFFB3E85AFFBBEB
+      6DFFDFF5B5FFFAFDF6FFFDFDFFFFFEFFFFFFE3F6C3FFB3E85AFFB1E858FFB3E8
+      5AFFB5EC5CFFB4EC5CFFB5EC5CFFB5EC5CFFB5EC5CFFB7EC5EFFB5EC5CFFB5EC
+      5CFFB5EC5CFFBBED67FFDDF6B5FFFCFEFCFFEDFAD9FFB5EE5CFFB5EC5CFFB4EC
+      5CFFB8F05EFFB8F05FFFB8F05EFFB8F05EFFBBF05EFFB4F05CFFB7F05EFFB7F0
+      5FFFB7F05EFFB7F05EFFB7F05EFFCEF592FFF1FCE1FFB7F05EFFB7F15EFFB7F0
+      5EFFBAF460FFBAF460FFBAF460FFBAF460FFBAF460FFBAF460FFBAF45FFFB8F5
+      5FFFBAF45FFFBAF45FFFBAF45EFFBAF45FFFD3F89BFFBAF45FFFBBF45FFFBAF4
+      5FFFBCF861FFBCF961FFBCF861FFBCF861FFBCF861FFBCF861FFBCF861FFBCFA
+      61FFBCF861FFBCF861FFBCF861FFBCF861FFBCF861FFBCF961FFBCF861FFBCFA
+      61FFBEFA63FFBEFB63FFBEFB61FFBEF963FFBEFB63FFBEFA63FFBEFB63FFBEFB
+      63FFBEFA63FFBEFA63FFBEFA62FFBEFA63FFBEFA63FFBFFA63FFBEFA63FFBEFA
+      62FF000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000
+    }
+    Visible = True
+    Left = 72
+    Top = 24
+  end
+  object YggdrasilNotFound: TTaskDialog
+    Buttons = <>
+    CommonButtons = [tcbClose]
+    DefaultButton = tcbClose
+    ExpandedText = 'Если вы не знаете, что это за Yggdrasil, загляните <a href="https://yggdrasil-network.github.io">СЮДА</a>. '
+    Flags = [tfEnableHyperlinks, tfUseHiconMain, tfUseHiconFooter, tfAllowDialogCancellation]
+    MainIcon = tdiError
+    RadioButtons = <>
+    QueryItemIndex = 0
+    Text = 'Не найдена как минимум одна часть Yggdrasil Network. Установите все части, прежде чем использовать этот графический интерфейс.'
+    Title = 'Yggdrasil не найден'
+    OnButtonClicked = YggdrasilNotFoundButtonClicked
+    Left = 72
+    Top = 80
+  end
+  object AreYouSureFullShutdown: TTaskDialog
+    Buttons = <>
+    Caption = 'Вы уверены?'
+    CommonButtons = [tcbYes, tcbNo]
+    DefaultButton = tcbNo
+    MainIcon = tdiQuestion
+    RadioButtons = <>
+    QueryItemIndex = 0
+    Text = 'Вы уверены? Скорее всего, в следующий раз вам понадобится запустить Yggdrasil и этот Yggdrasil UI вручную.'
+    OnButtonClicked = AreYouSureFullShutdownButtonClicked
+    Left = 72
+    Top = 136
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 152
+    Top = 8
+    object MenuItem1: TMenuItem
+      Caption = 'Сеть'
+      object MenuItem10: TMenuItem
+        Caption = 'Просмотреть пиров'
+        OnClick = MenuItem10Click
+      end
+      object MenuItem11: TMenuItem
+        Caption = 'Просмотреть этот узел '
+        OnClick = MenuItem11Click
+      end
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Пиры'
+      object MenuItem6: TMenuItem
+        Caption = 'Изменить пиры для подключения'
+        OnClick = MenuItem6Click
+      end
+      object MenuItem8: TMenuItem
+        Caption = 'Изменить прослушиваемых пиров'
+        OnClick = MenuItem8Click
+      end
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Параметры...'
+      OnClick = MenuItem5Click
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'О программе'
+      OnClick = MenuItem3Click
+    end
+    object Separator1: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem4: TMenuItem
+      Caption = 'Завершить работу...'
+      object MenuItem9: TMenuItem
+        Caption = 'GUI'
+        OnClick = MenuItem9Click
+      end
+      object MenuItem12: TMenuItem
+        Caption = 'GUI и службы'
+        OnClick = MenuItem12Click
+      end
+      object MenuItem7: TMenuItem
+        Caption = 'Перезагрузить службу'
+        OnClick = MenuItem7Click
+      end
+    end
+  end
+  object AreYouSureReboot: TTaskDialog
+    Buttons = <>
+    Caption = 'Вы уверены?'
+    CommonButtons = [tcbYes, tcbNo]
+    DefaultButton = tcbYes
+    MainIcon = tdiQuestion
+    RadioButtons = <>
+    QueryItemIndex = 0
+    Text = 'Вы уверены? Если вы меняли конфигурацию Yggdrasil, то при запуске будут использованы новые данные конфигурации.'
+    OnButtonClicked = AreYouSureRebootButtonClicked
+    Left = 152
+    Top = 64
+  end
+end
