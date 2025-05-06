@@ -12,26 +12,25 @@ uses
   Process,
   RegExpr;
 
-
 type
   TSettings = Record
     //уже используются
     InitSystem: string[15];            //systemd, sysvinit, openrc, windows или другая
     ConfigFilePath: string[64];        //путь к конфигу игги - изначально берется используемый
-
-    //надо внедрить
-    SettingsVersion: string[10];       //версия настроек - для обратной совместимости
     UseSudo: boolean;                  //использование sudo для команд остановки и перезапуска
     UseCustomCommands: boolean;        //использование кастомных (нестандартных) команд
     RestartCustomCommand: string[128];
     ShutdownCustomCommand: string[128];
+
+    //надо внедрить
+    SettingsVersion: string[10];       //версия настроек - для обратной совместимости
     //Language: string[2];           //
     //UpdateFrequency: 250 .. 5000;  //частота обновления в FormGetPeers, мс
   end;
 
 
 const AppDisplayname: string = 'Yggdrasil GUI';
-const AppVersion : string    = '1.0.0';           //16-ричное число - повыебываться)
+const AppVersion : string    = '1.0.1';           //16-ричное число - повыебываться)
 const SettingsVersionStamp   = '1.0.0';
 
 var
@@ -45,7 +44,7 @@ procedure CreateSettingsRecord;
 procedure LoadSettingsRecord(const Path: string);
 procedure SaveSettingsRecord(const Path: string);
 function  ReadYggdrasilConf(const Path: string): TStringList;
-procedure WriteYggdrasilConf(const Path: string; Data: TStringList);
+procedure WriteYggdrasilConf(const Path: string; Data: TStringList; SenderObject: TComponent);
 procedure RestartYggdrasilService;
 procedure ShutdownYggdrasilService;
 
@@ -180,14 +179,44 @@ begin
   end;
 end;
 
-
-procedure WriteYggdrasilConf(const Path: string; Data: TStringList);
+//sender нужен для прикрепления формы с вводом к вызывающей форме
+procedure WriteYggdrasilConf(const Path: string; Data: TStringList; SenderObject: TComponent);
+var Proc: TProcess;
+  TempFile: string;
+  Output: TStringList;
 begin
+  TempFile := GetTempFileName('', 'config_');
+  Output := TStringList.Create;
+
   try
-    Data.SaveToFile(Path);
-  except
-    on E: Exception do
-      ShowMessage('Ошибка записи в файл: ' + E.Message);
+    //запись во временный файл
+    with TStringList.Create do
+    try
+      Text := Data.Text;
+      SaveToFile(TempFile);
+    finally
+      Free;
+    end;
+
+    //копирование временного файла в /etc/
+    Proc := TProcess.Create(nil);
+    try
+      Proc.Executable := 'pkexec';
+      Proc.Parameters.Add('cp');
+      Proc.Parameters.Add(TempFile);
+      Proc.Parameters.Add(Path);
+      Proc.Options := [poUsePipes, poWaitOnExit];
+      Proc.Execute;
+
+      Output.LoadFromStream(Proc.Stderr);
+
+      if Proc.ExitStatus <> 0 then
+        showMessage('Не удалось перезаписать конфиг.'' Код ошибки: ' + floattostr(Proc.ExitStatus) + '. Сообщение: ' + Output.Text);
+    finally
+      Proc.Free;
+    end;
+  finally
+    DeleteFile(TempFile);
   end;
 end;
 

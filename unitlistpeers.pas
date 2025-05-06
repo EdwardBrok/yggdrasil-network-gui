@@ -105,7 +105,7 @@ begin
   newPeersField.Add('  ]');
 
   newConf.Text := ReplaceStr(prevConf.Text, prevPeersField.Text, newPeersField.Text);
-  WriteYggdrasilConf(Settings.ConfigFilePath, newConf);
+  WriteYggdrasilConf(Settings.ConfigFilePath, newConf, FormListPeers);
 
   prevPeersField := newPeersField; //обновление предыдущего списка пиров - нет смысла заново читать файл
 end;
