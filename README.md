@@ -1,6 +1,6 @@
 # 🌳 Yggdrasil GUI
 
-**Yggdrasil GUI** — graphical interface for managing the [Yggdrasil Network] service(https://yggdrasil-network.github.io/).  
+**Yggdrasil GUI** — graphical interface for managing the [Yggdrasil Network](https://yggdrasil-network.github.io/) service.  
 The program provides convenient access to network settings and statistics via the tray menu.   
 
 ---
