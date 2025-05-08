@@ -14,7 +14,7 @@ The program provides convenient access to network settings and statistics via th
 ## 📦 Installation and launch
 1. **Yggdrasil** must be [installed separately](https://yggdrasil-network.github.io/installation.html).  
 2. Download the latest version of **Yggdrasil GUI** from [releases](https://github.com/EdwardBrok/yggdrasil-network-gui/releases).  
-3. Unzip the archive and run the executable file (the program is portable, no installation is required).  
+3. Run the executable file (the program is portable, no installation is required).  
 
 ---
 
