@@ -1,49 +1,49 @@
 # 🌳 Yggdrasil GUI
 
-**Yggdrasil GUI** — графический интерфейс для управления службой [Yggdrasil Network](https://yggdrasil-network.github.io/).  
-Программа предоставляет удобный доступ к настройкам и статистике сети через трей-меню.   
+**Yggdrasil GUI** — graphical interface for managing the [Yggdrasil Network] service(https://yggdrasil-network.github.io/).  
+The program provides convenient access to network settings and statistics via the tray menu.   
 
 ---
 
-## 🛠 Технологии
-- **Lazarus** (IDE)  
-- **FreePascal** (Язык)  
+## 🛠 Stack
+- **Lazarus** (IDE)
+- **FreePascal** (Language)  
 
 ---
 
-## 📦 Установка и запуск
-1. **Yggdrasil** должен быть [установлен отдельно](https://yggdrasil-network.github.io/installation.html).  
-2. Скачайте последнюю версию **Yggdrasil GUI** из [релизов](https://github.com/EdwardBrok/yggdrasil-network-gui/releases).  
-3. Распакуйте архив и запустите исполняемый файл (программа портативная, установка не требуется).  
+## 📦 Installation and launch
+1. **Yggdrasil** must be [installed separately](https://yggdrasil-network.github.io/installation.html).  
+2. Download the latest version of **Yggdrasil GUI** from [releases](https://github.com/EdwardBrok/yggdrasil-network-gui/releases).  
+3. Unzip the archive and run the executable file (the program is portable, no installation is required).  
 
 ---
 
-## 🖥 Использование
-После запуска программа появляется в системном трее. Доступные функции:  
-- ⚙️ Изменение конфигурации Yggdrasil  
-- 🌐 Просмотр информации об узле (IP, ключи)  
-- 📊 Статистика активных соединений  
-- 🔄 Перезапуск службы  
-- ❌ Остановка Yggdrasil  
+## 🖥 Usage
+After launching, the program appears in the system tray. Available Functions:
+- ⚙️ Yggdrasil configuration change  
+- 🌐 View information about the node (IP, keys)  
+- Statistics of active connections  
+- 🔄 Restarting the service  
+- ❌ Yggdrasil stop  
 
 ---
 
-## 📜 Лицензия
-Проект распространяется под лицензией **GNU GPL 2.0**.  
-Подробнее см. [LICENSE](LICENSE).  
+## 📜 License
+The project is distributed under the **GNU GPL 2.0** license.  
+For more information, see [LICENSE](LICENSE).  
 
 ---
 
-## 🤝 Участие в разработке
-Приветствуются:  
-- Отчёты об ошибках в **Issues**  
-- Pull Requests с улучшениями  
+## 🤝 Contributing
+Welcome:  
+- Bug reports in **Issues**  
+- Pull Requests with improvements  
 
 ---
 
-## 📩 Контакты
+## 📩 Contacts
 - GitHub: [@EdwardBrok](https://github.com/EdwardBrok)  
 
 ---
 
-⚠️ **Важно**: Программа **не включает** Yggdrasil — его нужно установить отдельно!  
+⚠️ **Important**: The program **does not include** Yggdrasil — it must be installed separately!
