@@ -99,6 +99,9 @@ begin
                       FileExists('/usr/local/bin/yggdrasilctl');
   if not ygg_installed or not yggctl_installed then
   YggdrasilNotFound.Execute();
+
+  if GetStatusOfYggdrasilService = 'stopped' then
+    RestartYggdrasilService;
   {$endif}
   {$ifdef MSWINDOWS}
   ygg_installed := FileExists(GetWindowsSpecialDir(CSIDL_PROGRAM_FILES) + 'Yggdrasil\yggdrasil.exe');

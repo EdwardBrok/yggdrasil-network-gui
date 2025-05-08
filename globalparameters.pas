@@ -292,7 +292,7 @@ begin
       end;
       if (Settings.UseSudo) then
         command := 'sudo ' + command;
-      showmessage(command);
+      //showmessage(command);
       outputstr := RunCommandOverride(command);
 
       if (outputstr = 'initsys-not-implemented')
@@ -348,22 +348,27 @@ end;
 
 
 function GetStatusOfYggdrasilService: string;
+{$ifdef LINUX}
+var command, output: string;
 begin
-//  {$ifdef LINUX}
-//  case Settings.InitSystem of
-//    'systemd':  command := 'systemctl status yggdrasil';
-//    'sysvinit': command := 'service yggdrasil stop';
-//    'openrc':   command := 'rc-service yggdrasil stop';
-//    'unknown':  command := 'echo "initsys-not-identified"';
-//  end;
-//  if RunCommandOverride(command) = 'initsys-not-identified' then
-//    showmessage('Для вашей системы инициализации нет реализации :(\n Программа требует работающей службы Yggdrasil и хотела ее запустить. Сделайте это вручную.');
-//
-//  {$endif}
-  {$ifdef MSWINDOWS}
-  GetStatusOfYggdrasilService := copy(RunCommandOverride('sc query yggdrasil | find /c "RUNNING" >nul && echo running || echo stopped'), 1, 7);
-  {$endif}
+  case Settings.InitSystem of
+    'systemd':  command := 'systemctl is-active yggdrasil >/dev/null && echo running || echo stopped';
+    'sysvinit': command := 'service yggdrasil status >/dev/null 2>&1 && echo running || echo stopped';
+    'openrc':   command := 'rc-service yggdrasil status >/dev/null && echo running || echo stopped';
+    'unknown':  command := 'echo "ISUnknw"';
+  end;
+  output := copy(RunCommandOverride(command), 1, 7);
+  if output = 'ISUnkwn' then
+    showmessage('Для вашей системы инициализации нет реализации :(\n Программа требует работающей службы Yggdrasil и хотела ее запустить. Сделайте это вручную.')
+  else
+    GetStatusOfYggdrasilService := output;
 end;
+{$endif}
+{$ifdef MSWINDOWS}
+begin
+  GetStatusOfYggdrasilService := copy(RunCommandOverride('sc query yggdrasil | find /c "RUNNING" >nul && echo running || echo stopped'), 1, 7);
+end;
+{$endif}
 
 
 procedure FirstLaunch;
