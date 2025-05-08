@@ -59,7 +59,7 @@ procedure TFormSettings.ApplySettings;
 begin
   with Settings do
   begin
-    InitSystem := FormSettings.InitSystem.Text;
+    //InitSystem := FormSettings.InitSystem.Text;
     ConfigFilePath := FormSettings.ConfigFilePath.Text;
 
     UseSudo := FormSettings.UseSudo.Checked;
@@ -67,7 +67,14 @@ begin
     RestartCustomCommand := FormSettings.RestartYggdrasilCommand.Text;
     ShutdownCustomCommand := FormSettings.ShutdownYggdrasilCommand.Text;
   end;
-  SaveSettingsRecord(getuserdir + '/.ygg-gui.dat');
+
+  SaveSettingsRecord
+  {$ifdef LINUX}
+  (getuserdir + '/.ygg-gui.dat');
+  {$endif}
+  {$ifdef MSWINDOWS}
+  (getuserdir + '\Documents\.ygg-gui.dat');
+  {$endif}
 end;
 
 procedure TFormSettings.ApplyButtonClick(Sender: TObject);
@@ -115,8 +122,9 @@ begin
     end;
     'windows': begin
       //InitSystem.ReadOnly := true;
-      RestartYggdrasilCommand.Text := 'sc start yggdrasil';
-      ShutdownYggdrasilCommand.Text := 'sc shutdown yggdrasil';
+      UseCustom.Enabled := false;
+      RestartYggdrasilCommand.Text := 'sc stop yggdrasil; sc start yggdrasil';
+      ShutdownYggdrasilCommand.Text := 'sc stop yggdrasil';
     end;
   end;
 end;

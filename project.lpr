@@ -13,6 +13,9 @@ uses
   Forms,
   runtimetypeinfocontrols,
   lazcontrols,
+  {$ifdef MSWINDOWS}
+  sysutils,
+  {$endif}
   unitmain,
   unitgetpeers,
   unitlistpeers,

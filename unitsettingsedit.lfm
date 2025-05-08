@@ -1,43 +1,45 @@
 object FormSettings: TFormSettings
   Left = 1421
-  Height = 514
+  Height = 642
   Top = 165
-  Width = 400
+  Width = 500
   BorderStyle = bsSingle
   Caption = 'FormSettings'
-  ClientHeight = 514
-  ClientWidth = 400
+  ClientHeight = 642
+  ClientWidth = 500
   DefaultMonitor = dmDesktop
+  DesignTimePPI = 120
   Position = poScreenCenter
   LCLVersion = '4.0.0.4'
   OnCreate = FormCreate
   OnShow = FormCreate
   object Main: TPageControl
     Left = 0
-    Height = 450
+    Height = 562
     Top = 0
-    Width = 400
-    ActivePage = OtherPage
-    TabIndex = 1
+    Width = 500
+    ActivePage = ServiceControlPage
+    TabIndex = 0
     TabOrder = 0
     object ServiceControlPage: TTabSheet
       Caption = 'Управление службой'
-      ClientHeight = 416
-      ClientWidth = 396
+      ClientHeight = 529
+      ClientWidth = 492
       object LabelInitSystem: TLabel
-        Left = 16
+        Left = 20
         Height = 20
-        Top = 296
-        Width = 110
+        Top = 370
+        Width = 104
         Caption = 'Система служб'
         Visible = False
       end
       object InitSystem: TComboBox
-        Left = 180
-        Height = 30
-        Top = 288
-        Width = 98
-        ItemHeight = 0
+        Left = 225
+        Height = 28
+        Top = 360
+        Width = 122
+        Enabled = False
+        ItemHeight = 20
         Items.Strings = (
           'systemd'
           'sysvinit'
@@ -50,97 +52,97 @@ object FormSettings: TFormSettings
         OnChange = InitSystemChange
       end
       object CustomCommands: TGroupBox
-        Left = 16
-        Height = 145
-        Top = 128
-        Width = 360
+        Left = 20
+        Height = 181
+        Top = 160
+        Width = 450
         Caption = 'Нестандартные команды'
-        ClientHeight = 123
-        ClientWidth = 356
+        ClientHeight = 156
+        ClientWidth = 446
         TabOrder = 1
         object LabelRestart: TLabel
-          Left = 8
+          Left = 10
           Height = 40
-          Top = 16
-          Width = 125
+          Top = 20
+          Width = 118
           Caption = 'Перезапуск'#10'службы Yggdrasil'
         end
         object RestartYggdrasilCommand: TEdit
-          Left = 160
+          Left = 200
           Height = 28
-          Top = 22
-          Width = 184
+          Top = 28
+          Width = 230
           MaxLength = 128
           TabOrder = 0
         end
         object LabelShutdown: TLabel
-          Left = 8
+          Left = 10
           Height = 40
-          Top = 68
-          Width = 125
+          Top = 85
+          Width = 118
           Caption = 'Остановка'#10'службы Yggdrasil'
         end
         object ShutdownYggdrasilCommand: TEdit
-          Left = 160
+          Left = 200
           Height = 28
-          Top = 80
-          Width = 184
+          Top = 100
+          Width = 230
           MaxLength = 128
           TabOrder = 1
         end
       end
       object LabelUseCustom: TLabel
-        Left = 16
+        Left = 20
         Height = 40
-        Top = 64
-        Width = 111
+        Top = 80
+        Width = 106
         Caption = 'Использовать'#10'нестандартные'
       end
       object UseCustom: TCheckBox
-        Left = 180
-        Height = 21
-        Top = 72
+        Left = 225
+        Height = 20
+        Top = 90
         Width = 21
         TabOrder = 2
         OnChange = UseCustomChange
       end
       object LabelUseSudo: TLabel
-        Left = 16
+        Left = 20
         Height = 40
-        Top = 16
-        Width = 154
+        Top = 20
+        Width = 144
         Caption = 'Использовать'#10'SUDO (*nix-системы)'
       end
       object UseSudo: TCheckBox
-        Left = 180
-        Height = 21
-        Top = 24
+        Left = 225
+        Height = 20
+        Top = 30
         Width = 21
         TabOrder = 3
       end
     end
     object OtherPage: TTabSheet
       Caption = 'Прочее'
-      ClientHeight = 416
-      ClientWidth = 396
+      ClientHeight = 529
+      ClientWidth = 492
       object ConfigFilePathLabel: TLabel
-        Left = 16
+        Left = 20
         Height = 40
-        Top = 16
-        Width = 107
+        Top = 20
+        Width = 101
         Caption = 'Путь к файлу'#10'конфигурации'
       end
       object ConfigFilePath: TFileNameEdit
         AnchorSideLeft.Side = asrBottom
         AnchorSideRight.Side = asrBottom
-        Left = 160
+        Left = 200
         Height = 28
-        Top = 16
-        Width = 216
+        Top = 20
+        Width = 267
         Filter = 'yggdrasil.conf|yggdrasil.conf|*.conf|*.conf|*|*'
         FilterIndex = 0
         HideDirectories = False
-        ButtonWidth = 23
+        ButtonWidth = 29
         NumGlyphs = 1
         Anchors = [akTop, akLeft, akRight]
         MaxLength = 0
@@ -150,10 +152,10 @@ object FormSettings: TFormSettings
   end
   object OKButton: TButton
     AnchorSideBottom.Side = asrBottom
-    Left = 16
-    Height = 40
-    Top = 464
-    Width = 80
+    Left = 20
+    Height = 50
+    Top = 580
+    Width = 100
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 1
@@ -161,10 +163,10 @@ object FormSettings: TFormSettings
   end
   object ApplyButton: TButton
     AnchorSideBottom.Side = asrBottom
-    Left = 112
-    Height = 40
-    Top = 464
-    Width = 104
+    Left = 140
+    Height = 50
+    Top = 580
+    Width = 130
     Anchors = [akLeft, akBottom]
     Caption = 'Применить'
     TabOrder = 2
@@ -173,10 +175,10 @@ object FormSettings: TFormSettings
   object CancelButton: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 296
-    Height = 40
-    Top = 464
-    Width = 91
+    Left = 370
+    Height = 50
+    Top = 580
+    Width = 114
     Anchors = [akRight, akBottom]
     Caption = 'Отмена'
     TabOrder = 3

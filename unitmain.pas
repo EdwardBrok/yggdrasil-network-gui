@@ -6,7 +6,6 @@ interface
 uses
   Classes,
   SysUtils,
-  Process,
   Forms,
   Controls,
   Graphics,
@@ -17,6 +16,10 @@ uses
   StdCtrls,
   Grids,
   System.UITypes,
+  {$ifdef MSWINDOWS}
+  WinDirs,
+  {$endif}
+
   GlobalParameters,
   UnitGetPeers,
   UnitListPeers,
@@ -85,7 +88,9 @@ implementation
 
 procedure TFormMain.FormCreate(Sender: TObject);
 var ygg_installed, yggctl_installed: boolean;
+//  output: string;
 begin
+  {$ifdef LINUX}
   ygg_installed := FileExists('/usr/bin/yggdrasil') or
                    DirectoryExists('/usr/lib/yggdrasil') or
                    FileExists('/usr/local/bin/yggdrasil');
@@ -94,6 +99,17 @@ begin
                       FileExists('/usr/local/bin/yggdrasilctl');
   if not ygg_installed or not yggctl_installed then
   YggdrasilNotFound.Execute();
+  {$endif}
+  {$ifdef MSWINDOWS}
+  ygg_installed := FileExists(GetWindowsSpecialDir(CSIDL_PROGRAM_FILES) + 'Yggdrasil\yggdrasil.exe');
+  yggctl_installed := FileExists(GetWindowsSpecialDir(CSIDL_PROGRAM_FILES) + 'Yggdrasil\yggdrasilctl.exe');
+  if not ygg_installed or not yggctl_installed then
+  YggdrasilNotFound.Execute();
+
+  if GetStatusOfYggdrasilService = 'stopped' then
+    RunCommandOverride('sc start yggdrasil');
+  {$endif}
+
 end;
 
 

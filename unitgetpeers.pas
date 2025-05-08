@@ -70,9 +70,14 @@ begin //неоптимизированный говнокод?
   Result := TStringList.Create;
   Process := TProcess.Create(nil);
   try
+    {$ifdef LINUX}
     Process.Executable := 'yggdrasilctl';
+    {$endif}
+    {$ifdef MSWINDOWS}
+    Process.Executable := '"C:\Program Files\Yggdrasil\yggdrasilctl.exe"';
+    {$endif}
     Process.Parameters.Add('getPeers');
-    Process.Options := [poUsePipes, poWaitOnExit];
+    Process.Options := [poUsePipes, poWaitOnExit, poNoConsole];
     Process.Execute;
     Result.LoadFromStream(Process.Output);
   finally

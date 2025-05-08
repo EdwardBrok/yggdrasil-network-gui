@@ -70,22 +70,22 @@ begin
   regex.ModifierG := true;
   regex.ModifierM := true;
 
-  if Settings.InitSystem = 'windows' then
+  {$ifdef MSWINDOWS}
   begin
     output := TStringList.Create;
     Process := TProcess.Create(nil);
     try
-      //TODO должен быть другой путь к файлу
-      Process.Executable := 'yggdrasilctl';
-      Process.Parameters.Add('getPeers');
-      Process.Options := [poUsePipes, poWaitOnExit];
+      Process.Executable := '"C:\Program Files\Yggdrasil\yggdrasilctl.exe"';
+      Process.Parameters.Add('getSelf');
+      Process.Options := [poUsePipes, poWaitOnExit, poNoConsole];
       Process.Execute;
       output.LoadFromStream(Process.Output);
     finally
       Process.Free;
     end;
-  end
-  else
+  end;
+  {$endif}
+  {$ifdef LINUX}
   begin //linux
     output := TStringList.Create;
     Process := TProcess.Create(nil);
@@ -99,6 +99,7 @@ begin
       Process.Free;
     end;
   end;
+  {$endif}
 
   for i := 0 to 5 do
   begin
