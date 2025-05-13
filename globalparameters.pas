@@ -63,8 +63,32 @@ procedure FirstLaunch;
 implementation
 
 
-{$ifdef MSWINDOWS}
 procedure CreateShortcut(LinkPath: string);
+{$ifdef LINUX}
+var Output: TStringList;
+begin
+  Output := TStringList.Create;
+  try
+    //запись во временный файл
+    with TStringList.Create do
+    try
+      Text := '[Desktop Entry]'     + LineEnding +
+              'Type=Application'    + LineEnding +
+              'Name=Yggdrasil GUI'  + LineEnding +
+              'Exec=' + ParamStr(0) + LineEnding +
+              'StartupNotify=false' + LineEnding +
+              'Terminal=false';
+      SaveToFile(LinkPath);
+    finally
+      Free;
+    end;
+  except
+    on E: Exception do
+    showmessage('Ошибка создания ярлыка для автозапуска: ' + E.Message);
+  end;
+end;
+{$endif}
+{$ifdef MSWINDOWS}
 var IObject: IUnknown;
   ISLink: IShellLink;
   IPFile: IPersistFile;
@@ -302,7 +326,7 @@ begin
     if Settings.UseCustomCommands then
     begin
         if Settings.UseSudo then
-          RunCommandOverride('sudo '+ Settings.RestartCustomCommand)
+          RunCommandOverride('pkexec '+ Settings.RestartCustomCommand)
         else
           RunCommandOverride(Settings.RestartCustomCommand)
     end
@@ -317,7 +341,7 @@ begin
         'unknown':  command := 'echo initsys-not-implemented';
       end;
       if (Settings.UseSudo) then
-        command := 'sudo ' + command;
+        command := 'pkexec ' + command;
       //showmessage(command);
       outputstr := RunCommandOverride(command);
 
@@ -341,10 +365,10 @@ begin
     {$ifdef LINUX}
     if Settings.UseCustomCommands then
     begin
-        if Settings.UseSudo then
-          RunCommandOverride('sudo '+ Settings.ShutdownCustomCommand)
-        else
-          RunCommandOverride(Settings.ShutdownCustomCommand)
+      if Settings.UseSudo then
+        RunCommandOverride('pkexec '+ Settings.ShutdownCustomCommand)
+      else
+        RunCommandOverride(Settings.ShutdownCustomCommand)
     end
     else
     {$endif}
@@ -357,8 +381,7 @@ begin
         'unknown':  command := 'echo "initsys-not-identified"';
       end;
       if (Settings.UseSudo) then
-        command := 'sudo ' + command;
-      //showmessage(command);
+        command := 'pkexec ' + command;
 
       outputstr := RunCommandOverride(command);
       if outputstr = 'initsys-not-identified' then
@@ -399,12 +422,15 @@ end;
 
 procedure ToggleAutostart(Enabled: boolean);
 {$ifdef LINUX}
+begin
+  if Enabled then CreateShortcut(SysUtils.GetEnvironmentVariable('HOME') + '/.config/autostart/yggdrasil-gui.desktop')
+  else RunCommandOverride('rm $HOME/.config/autostart/yggdrasil-gui.desktop');
+end;
 {$endif}
 {$ifdef MSWINDOWS}
 var LinkPath: string;
 begin
   LinkPath := GetWindowsSpecialDir(CSIDL_STARTUP) + AppDisplayName + '.lnk';
-  showmessage(LinkPath);
 
   if Enabled then CreateShortcut(LinkPath)
   else DeleteFile(PChar(LinkPath));

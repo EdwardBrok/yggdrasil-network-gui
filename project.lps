@@ -46,7 +46,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UnitListPeers"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="183"/>
+        <TopLine Value="87"/>
         <CursorPos X="85" Y="192"/>
         <UsageCount Value="203"/>
         <Loaded Value="True"/>
@@ -58,8 +58,8 @@
         <UnitName Value="GlobalParameters"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="163"/>
-        <CursorPos X="5" Y="183"/>
+        <TopLine Value="441"/>
+        <CursorPos Y="385"/>
         <UsageCount Value="203"/>
         <Loaded Value="True"/>
       </Unit>
@@ -72,7 +72,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="48"/>
         <CursorPos X="13" Y="72"/>
-        <UsageCount Value="172"/>
+        <UsageCount Value="175"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -86,7 +86,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="196"/>
         <CursorPos X="24" Y="218"/>
-        <UsageCount Value="75"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -100,7 +100,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="83"/>
         <CursorPos Y="106"/>
-        <UsageCount Value="72"/>
+        <UsageCount Value="75"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -113,7 +113,7 @@
         <UnitName Value="unitAboutProgram"/>
         <TopLine Value="25"/>
         <CursorPos Y="47"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="68"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -279,13 +279,13 @@
         <UsageCount Value="8"/>
       </Unit>
       <Unit>
-        <Filename Value="../../../../lazarus/fpc/3.2.2/source/rtl/win64/windows.pp"/>
+        <Filename Value="/lazarus/fpc/3.2.2/source/rtl/win64/windows.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="34"/>
         <UsageCount Value="10"/>
       </Unit>
       <Unit>
-        <Filename Value="../../../../lazarus/lcl/forms.pp"/>
+        <Filename Value="/lazarus/lcl/forms.pp"/>
         <UnitName Value="Forms"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="46"/>
@@ -293,7 +293,7 @@
         <UsageCount Value="9"/>
       </Unit>
       <Unit>
-        <Filename Value="../../../../lazarus/fpc/3.2.2/source/packages/fcl-base/src/custapp.pp"/>
+        <Filename Value="/lazarus/fpc/3.2.2/source/packages/fcl-base/src/custapp.pp"/>
         <UnitName Value="CustApp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="18"/>
@@ -301,52 +301,42 @@
         <UsageCount Value="8"/>
       </Unit>
       <Unit>
-        <Filename Value="../../../../lazarus/fpc/3.2.2/source/rtl/win/wininc/ascdef.inc"/>
+        <Filename Value="/lazarus/fpc/3.2.2/source/rtl/win/wininc/ascdef.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="10" Y="470"/>
         <UsageCount Value="9"/>
       </Unit>
       <Unit>
-        <Filename Value="../../../../lazarus/fpc/3.2.2/source/packages/winunits-base/src/shlobj.pp"/>
+        <Filename Value="/lazarus/fpc/3.2.2/source/packages/winunits-base/src/shlobj.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="158"/>
         <CursorPos X="16" Y="37"/>
         <UsageCount Value="11"/>
       </Unit>
       <Unit>
-        <Filename Value="../../../../lazarus/lcl/include/control.inc"/>
+        <Filename Value="/lazarus/lcl/include/control.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2957"/>
         <CursorPos Y="2976"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="/usr/lib/fpc/src/rtl/unix/sysunixh.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="2" Y="29"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/lib/fpc/src/rtl/objpas/sysutils/osutil.inc"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="74"/>
+        <CursorPos X="3" Y="89"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="68" Column="23" TopLine="48"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="18" Column="10"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="19" Column="10"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="20" Column="11" TopLine="2"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="422" TopLine="390"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="423" TopLine="390"/>
-      </Position>
       <Position>
         <Filename Value="globalparameters.pas"/>
         <Caret Line="421" TopLine="390"/>
@@ -443,6 +433,30 @@
         <Filename Value="unitsettingsedit.pas"/>
         <Caret Line="87" TopLine="54"/>
       </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="404" Column="30" TopLine="373"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="163" TopLine="146"/>
+      </Position>
+      <Position>
+        <Filename Value="unitlistpeers.pas"/>
+        <Caret Line="192" Column="113" TopLine="87"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="79" Column="40" TopLine="59"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="80" Column="15" TopLine="59"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="427" Column="117" TopLine="423"/>
+      </Position>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
@@ -454,22 +468,4 @@
       </List>
     </HistoryLists>
   </ProjectSession>
-  <Debugging>
-    <BreakPoints>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="globalparameters.pas"/>
-        <Line Value="72"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="globalparameters.pas"/>
-        <Line Value="406"/>
-      </Item>
-    </BreakPoints>
-  </Debugging>
 </CONFIG>
