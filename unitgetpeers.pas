@@ -42,6 +42,7 @@ type
   TFormGetPeers = class(TForm)
     ListView1: TListView;
     UpdatePeersTableTimer: TTimer;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure UpdatePeersTableTimerTimer(Sender: TObject);
     procedure UpdatePeersTable;
@@ -161,6 +162,12 @@ end;
 procedure TFormGetPeers.FormCreate(Sender: TObject);
 begin
   Caption := GlobalParameters.AppDisplayname + ' - Все узлы'; //нужна система локализации
+end;
+
+procedure TFormGetPeers.FormClose(Sender: TObject;
+  var CloseAction: TCloseAction);
+begin
+  CloseAction := caFree;
 end;
 
 procedure TFormGetPeers.UpdatePeersTableTimerTimer(Sender: TObject);

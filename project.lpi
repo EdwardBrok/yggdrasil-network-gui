@@ -4,7 +4,7 @@
     <Version Value="12"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="Unnamed Yggdrasil GUI"/>
+      <Title Value="Yggdrasil GUI"/>
       <Scaled Value="True"/>
       <UseXPManifest Value="True"/>
       <XPManifest>

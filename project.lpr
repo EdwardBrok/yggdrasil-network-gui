@@ -28,8 +28,8 @@ uses
 
 begin
   RequireDerivedFormResource:=True;
-  Application.Title:='Unnamed Yggdrasil GUI';
-  Application.Scaled:=True;
+  Application.Title := 'Yggdrasil GUI';
+  Application.Scaled := True;
   Application.Initialize;
   Application.ShowMainForm := FALSE;
   Application.CreateForm(TFormMain, FormMain);

@@ -9,6 +9,7 @@ object FormGetPeers: TFormGetPeers
   DesignTimePPI = 120
   Position = poScreenCenter
   LCLVersion = '4.0.0.4'
+  OnClose = FormClose
   OnCreate = FormCreate
   object ListView1: TListView
     Left = 10

@@ -128,6 +128,7 @@ var form: TFormThisNode;
 begin
   form := TFormThisNode.Create(Application);
   form.ShowModal;
+  form.free;
 end;
 
 
@@ -155,6 +156,7 @@ var form: TFormListPeers;
 begin
   form := TFormListPeers.Create(Application);
   form.ShowModal;
+  form.Free;
 end;
 
 procedure TFormMain.MenuItem7Click(Sender: TObject);
@@ -167,6 +169,7 @@ var form: TFormListListen;
 begin
   form := TFormListListen.Create(Application);
   form.ShowModal;
+  form.free;
 end;
 
 procedure TFormMain.MenuItem9Click(Sender: TObject);

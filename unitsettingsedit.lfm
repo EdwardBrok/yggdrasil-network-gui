@@ -1,7 +1,7 @@
 object FormSettings: TFormSettings
-  Left = 1421
+  Left = 1351
   Height = 642
-  Top = 165
+  Top = 164
   Width = 500
   BorderStyle = bsSingle
   Caption = 'FormSettings'
@@ -125,7 +125,7 @@ object FormSettings: TFormSettings
       Caption = 'Прочее'
       ClientHeight = 529
       ClientWidth = 492
-      object ConfigFilePathLabel: TLabel
+      object LabelConfigFilePath: TLabel
         Left = 20
         Height = 40
         Top = 20
@@ -147,6 +147,20 @@ object FormSettings: TFormSettings
         Anchors = [akTop, akLeft, akRight]
         MaxLength = 0
         TabOrder = 0
+      end
+      object LabelAutostartEnabled: TLabel
+        Left = 20
+        Height = 20
+        Top = 80
+        Width = 127
+        Caption = 'Запуск с системой'
+      end
+      object AutostartEnabled: TCheckBox
+        Left = 200
+        Height = 20
+        Top = 76
+        Width = 21
+        TabOrder = 1
       end
     end
   end

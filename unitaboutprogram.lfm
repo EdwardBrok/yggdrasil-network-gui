@@ -1,7 +1,7 @@
 object FormAboutProgram: TFormAboutProgram
-  Left = 1385
+  Left = 1377
   Height = 456
-  Top = 306
+  Top = 129
   Width = 320
   BorderStyle = bsSingle
   Caption = 'FormAboutProgram'

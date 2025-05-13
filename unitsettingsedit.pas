@@ -15,10 +15,12 @@ type
   TFormSettings = class(TForm)
     ApplyButton: TButton;
     CancelButton: TButton;
+    AutostartEnabled: TCheckBox;
     ConfigFilePath: TFileNameEdit;
+    LabelAutostartEnabled: TLabel;
     LabelUseSudo: TLabel;
     OKButton: TButton;
-    ConfigFilePathLabel: TLabel;
+    LabelConfigFilePath: TLabel;
     UseCustom: TCheckBox;
     InitSystem: TComboBox; //временно скрыто. если ненужность подтвердится, удалить
     RestartYggdrasilCommand: TEdit;
@@ -64,6 +66,11 @@ begin
 
     UseSudo := FormSettings.UseSudo.Checked;
     UseCustomCommands := FormSettings.UseCustom.Checked;
+    if FormSettings.AutostartEnabled.Checked <> AutostartEnabled then
+    begin
+      AutostartEnabled := FormSettings.AutostartEnabled.Checked;
+      ToggleAutostart(AutostartEnabled);
+    end;
     RestartCustomCommand := FormSettings.RestartYggdrasilCommand.Text;
     ShutdownCustomCommand := FormSettings.ShutdownYggdrasilCommand.Text;
   end;
@@ -123,6 +130,7 @@ begin
     'windows': begin
       //InitSystem.ReadOnly := true;
       UseCustom.Enabled := false;
+      UseSudo.Enabled := false;
       RestartYggdrasilCommand.Text := 'sc stop yggdrasil; sc start yggdrasil';
       ShutdownYggdrasilCommand.Text := 'sc stop yggdrasil';
     end;
@@ -135,6 +143,7 @@ begin
   UseSudo.Checked := Settings.UseSudo;
   UpdateCustomCommandsArea;
   ConfigFilePath.Text := Settings.ConfigFilePath;
+  AutostartEnabled.Checked := Settings.AutostartEnabled;
   Caption := GlobalParameters.AppDisplayname + ' - Настройки'; //нужна система локализации
 end;
 

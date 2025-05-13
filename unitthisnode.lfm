@@ -1,7 +1,7 @@
 object FormThisNode: TFormThisNode
-  Left = 1390
+  Left = 1269
   Height = 389
-  Top = 418
+  Top = 264
   Width = 451
   BorderStyle = bsSingle
   Caption = 'FormThisNode'

@@ -13,6 +13,11 @@ uses
   {$ifdef MSWINDOWS}
   WinDirs,
   StrUtils,
+  Registry,
+  ShlObj,
+  ComObj,
+  activex,
+  windows,
   {$endif}
   RegExpr;
 
@@ -27,15 +32,16 @@ type
     ShutdownCustomCommand: string[128];
 
     //надо внедрить
-    SettingsVersion: string[10];       //версия настроек - для обратной совместимости
+    AutostartEnabled: boolean;
+    SettingsVersion: string[10];       //версия настроек - для переноса, обратной совместимости и т.д.
     //Language: string[2];           //
     //UpdateFrequency: 250 .. 5000;  //частота обновления в FormGetPeers, мс
   end;
 
 
 const AppDisplayname: string = 'Yggdrasil GUI';
-const AppVersion : string    = '1.0.1';           //16-ричное число - повыебываться)
-const SettingsVersionStamp   = '1.0.0';
+const AppVersion : string    = '1.1.1';
+const SettingsVersionStamp   = '1.1';
 
 var
   Settings: TSettings; //запись с настройками - кмк проще хранить все
@@ -51,9 +57,29 @@ procedure WriteYggdrasilConf(const Path: string; Data: TStringList; SenderObject
 procedure RestartYggdrasilService;
 procedure ShutdownYggdrasilService;
 function GetStatusOfYggdrasilService: string;
+procedure ToggleAutostart(Enabled: boolean);
 procedure FirstLaunch;
 
 implementation
+
+
+{$ifdef MSWINDOWS}
+procedure CreateShortcut(LinkPath: string);
+var IObject: IUnknown;
+  ISLink: IShellLink;
+  IPFile: IPersistFile;
+begin
+  IObject := CreateComObject(CLSID_ShellLink);
+  ISLink := IObject as IShellLink;
+  IPFile := IObject as IPersistFile;
+
+  ISLink.SetPath(PChar(ParamStr(0)));
+  ISLink.SetWorkingDirectory(PChar(ExtractFilePath(ParamStr(0))));
+
+  IPFile.Save(PWideChar(WideString(LinkPath)), False);
+end;
+{$endif}
+
 
 function RunCommandOverride(const Command: string): string;
 var
@@ -154,8 +180,7 @@ begin
 end;
 {$endif}
 {$ifdef MSWINDOWS} //assignfile() не работает
-var SettingsFile: file of TSettings;
-    OutStream: TFileStream;
+var OutStream: TFileStream;
 begin
   try
     if fileexists(path) then OutStream := TFileStream.Create(Path, fmOpenWrite)
@@ -185,11 +210,12 @@ begin
     GetWindowsSpecialDir(CSIDL_COMMON_APPDATA) + 'Yggdrasil\yggdrasil.conf';
     {$endif}
 
-    SettingsVersion := '1.0.0';
+    SettingsVersion := SettingsVersionStamp;
     UseSudo := false;
     UseCustomCommands := false;
     RestartCustomCommand := '';
     ShutdownCustomCommand := '';
+    AutostartEnabled := false;
   end;
   Settings := NewSettingsRecord;
   {$ifdef LINUX}
@@ -371,9 +397,48 @@ end;
 {$endif}
 
 
+procedure ToggleAutostart(Enabled: boolean);
+{$ifdef LINUX}
+{$endif}
+{$ifdef MSWINDOWS}
+var LinkPath: string;
+begin
+  LinkPath := GetWindowsSpecialDir(CSIDL_STARTUP) + AppDisplayName + '.lnk';
+  showmessage(LinkPath);
+
+  if Enabled then CreateShortcut(LinkPath)
+  else DeleteFile(PChar(LinkPath));
+end;
+{$endif}
+
+
+{$ifdef MSWINDOWS}
+//изменение прав доступа к службе
+procedure SetYggdrasilServiceRights; //ONLY WINDOWS
+var sid: string;
+  regex: TRegExpr;
+begin
+  regex := tregexpr.Create;
+  try
+    regex.Expression := 'S-1-5-21-[0-9]{10}-[0-9]{10}-[0-9]{10}-[0-9]{4}';
+    regex.exec(RunCommandOverride('whoami /user /fo csv /nh'));
+    sid := regex.Match[0];
+    showmessage('Сейчас программа изменит необходимые права для управления службой Yggdrasil. Ссылки на исходный код программы доступен во вкладке "О программе".');
+    ShellExecute(0, 'runas', PChar('cmd.exe'), PChar('/c sc sdset yggdrasil D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWRPWPDTLOCRRC;;;'+sid+')'), nil, SW_SHOWNORMAL);
+  finally
+    regex.free;
+  end;
+end;
+{$endif}
+
+
 procedure FirstLaunch;
 begin
   CreateSettingsRecord;
+
+  {$ifdef MSWINDOWS}
+  SetYggdrasilServiceRights;
+  {$endif}
 end;
 
 

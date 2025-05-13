@@ -1,12 +1,12 @@
 object FormMain: TFormMain
-  Left = 1682
-  Height = 283
-  Top = 395
-  Width = 238
+  Left = 1297
+  Height = 354
+  Top = 231
+  Width = 298
   Caption = 'FormMain'
+  DesignTimePPI = 120
   Position = poScreenCenter
   LCLVersion = '4.0.0.4'
-  WindowState = wsMinimized
   OnCreate = FormCreate
   object TrayIcon1: TTrayIcon
     PopUpMenu = PopupMenu1
@@ -50,8 +50,8 @@ object FormMain: TFormMain
       0000
     }
     Visible = True
-    Left = 72
-    Top = 24
+    Left = 90
+    Top = 30
   end
   object YggdrasilNotFound: TTaskDialog
     Buttons = <>
@@ -65,8 +65,8 @@ object FormMain: TFormMain
     Text = 'Не найдена как минимум одна часть Yggdrasil Network. Установите все части, прежде чем использовать этот графический интерфейс.'
     Title = 'Yggdrasil не найден'
     OnButtonClicked = YggdrasilNotFoundButtonClicked
-    Left = 72
-    Top = 80
+    Left = 90
+    Top = 100
   end
   object AreYouSureFullShutdown: TTaskDialog
     Buttons = <>
@@ -76,14 +76,14 @@ object FormMain: TFormMain
     MainIcon = tdiQuestion
     RadioButtons = <>
     QueryItemIndex = 0
-    Text = 'Вы уверены? Скорее всего, в следующий раз вам понадобится запустить Yggdrasil и этот Yggdrasil UI вручную.'
+    Text = 'Вы уверены? Скорее всего, в следующий раз вам понадобится запустить Yggdrasil и Yggdrasil GUI вручную.'
     OnButtonClicked = AreYouSureFullShutdownButtonClicked
-    Left = 72
-    Top = 136
+    Left = 90
+    Top = 170
   end
   object PopupMenu1: TPopupMenu
-    Left = 152
-    Top = 8
+    Left = 190
+    Top = 10
     object MenuItem1: TMenuItem
       Caption = 'Сеть'
       object MenuItem10: TMenuItem
@@ -143,7 +143,7 @@ object FormMain: TFormMain
     QueryItemIndex = 0
     Text = 'Вы уверены? Если вы меняли конфигурацию Yggdrasil, то при запуске будут использованы новые данные конфигурации.'
     OnButtonClicked = AreYouSureRebootButtonClicked
-    Left = 152
-    Top = 64
+    Left = 190
+    Top = 80
   end
 end
