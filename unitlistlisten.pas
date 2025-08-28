@@ -13,14 +13,9 @@ uses
   Graphics,
   Dialogs,
   StdCtrls,
-  CheckLst,
   MaskEdit,
   Buttons,
   ExtCtrls,
-  EditBtn,
-  Grids,
-  ValEdit,
-  LvlGraphCtrl,
   RegExpr,
   System.UITypes,
   GlobalParameters;
@@ -48,7 +43,6 @@ type
     RemovePeer: TBitBtn;
     RemovePeerDlg: TTaskDialog;
     Splitter1: TSplitter;
-    procedure AddPeerLabelClick(Sender: TObject);
     procedure ApplyPeersList;
     procedure ClearSelectionClick(Sender: TObject);
     procedure EnabledPeersListSelectionChange(Sender: TObject; User: boolean);
@@ -88,10 +82,11 @@ procedure TFormListListen.ApplyPeersList;
 var prevConf, newConf, newPeersField: TStringList;
   i: integer;
 begin
+  log(1, 'Rewriting Listen section...');
   newConf := TStringList.Create;
   newPeersField := TStringList.Create;
 
-  prevConf := ReadYggdrasilConf(Settings.ConfigFilePath);
+  prevConf := ReadYggdrasilConf;
 
   //создание новых строк для значения поля Peers
   newPeersField.Add('  Listen: [');
@@ -109,17 +104,14 @@ begin
   WriteYggdrasilConf(Settings.ConfigFilePath, newConf, FormListListen);
 
   prevPeersField := newPeersField; //обновление предыдущего списка пиров - нет смысла заново читать файл
-end;
-
-procedure TFormListListen.AddPeerLabelClick(Sender: TObject);
-begin
-
+  log(0, 'Listen section has been rewritten to the config with amount of ' + inttostr(EnabledPeersList.Count + DisabledPeersList.Count) + ' peers.');
 end;
 
 procedure TFormListListen.ClearSelectionClick(Sender: TObject);
 begin
   DisabledPeersList.ClearSelection;
   EnabledPeersList.ClearSelection;
+  log(0, 'FormListListen: cleared selections on both of columns');
 end;
 
 
@@ -153,6 +145,8 @@ end;
 procedure TFormListListen.OKButtonClick(Sender: TObject);
 begin
   ApplyPeersList;
+  RestartYggdrasilService;
+  log(0, 'closing FormListListen');
   close;
 end;
 
@@ -163,6 +157,7 @@ var i: integer;
 begin
    if AModalResult = mrYes then
    begin
+     log(0, 'FormListListen: removing selected peers from columns');
      if EnabledPeersList.Items.Count <> 0 then
        for i := EnabledPeersList.Items.Count - 1 downto 0 do
          if EnabledPeersList.Selected[i] then
@@ -181,6 +176,7 @@ end;
 
 procedure TFormListListen.UpdateButtonsState;
 begin
+  log(0, 'updating buttons state');
   RemovePeer.Enabled := (EnabledPeersList.SelCount > 0) or (DisabledPeersList.SelCount > 0);
   DisablePeer.Enabled := (EnabledPeersList.SelCount > 0) and (EnabledPeersList.Focused);
   EnablePeer.Enabled := (DisabledPeersList.SelCount > 0) and (DisabledPeersList.Focused);
@@ -195,6 +191,7 @@ var Config: TStringList;
   tempStrArr: TStringArray;
   s, t: string;
 begin
+  log(0, 'showing FormListListen');
   Caption := GlobalParameters.AppDisplayname + ' - Изменение прослушиваемых пиров';
   ListChanged := false;
   Config := TStringList.Create;
@@ -205,13 +202,16 @@ begin
   regex.ModifierG := true;
   regex.ModifierM := true;
 
-  Config := ReadYggdrasilConf(Settings.ConfigFilePath);
+  Config := ReadYggdrasilConf;
+  log(0, 'parsing peers from Listen section of config...');
   try
     if regex.Exec(Config.Text) then
     begin
+      log(0, 'section found, continuing...');
       prevPeersField.AddText(regex.Match[0]);
       if regex.Match[1] <> '' then
       begin
+        log(0, 'section is not empty, parsing...');
         tempStrArr := splitstring(trim(regex.Match[1]), #$0A);
         for s in tempStrArr do
         begin
@@ -226,7 +226,10 @@ begin
     UpdateButtonsState;
   except
     on E: Exception do
-    showMessage('Ошибка чтения прослушиваемых пиров: ' + e.Message)
+    begin
+      log(3, 'Error at reading Listen section of peers: ' + e.Message);
+      showMessage('Ошибка чтения прослушиваемых пиров: ' + e.Message);
+    end;
   end;
   Regex.Free;
   Config.Free;
@@ -237,12 +240,12 @@ end;
 procedure TFormListListen.AtCloseQueryDlgButtonClicked(Sender: TObject;
   AModalResult: TModalResult; var ACanClose: Boolean);
 begin
-   if AModalResult = mrNo then Close;
-   if AModalResult = mrYes then
-   begin
-     applypeerslist;
-     close;
+   if AModalResult = mrYes then begin
+     ApplyPeersList;
+     RestartYggdrasilService;
+     Close;
    end;
+   if AModalResult = mrNo then Close;
 end;
 
 
@@ -255,12 +258,17 @@ begin
     //пока что без ipv6 - но есть домены и кривой ipv4
     if regex.Exec(AddPeerEdit.Text) then
     begin
+      log(0, 'FormListListen->AddPeerOKButton: adding peer "'+AddPeerEdit.Text+'" to the list.');
       listchanged := true;
       updateButtonsState;
       EnabledPeersList.Items.Add(AddPeerEdit.Text);
       AddPeerEdit.Clear;
     end
-    else ShowMessage('Некорректный адрес пира.'); //execute();
+    else
+    begin
+      log(0, 'FormListListen->AddPeerEdit: submitted peer "'+AddPeerEdit.Text+'" seems to be incorrect. Not adding to the list.');
+      ShowMessage('Некорректный адрес пира.');
+    end;//execute();
   finally
   end;
 end;
@@ -276,14 +284,17 @@ procedure TFormListListen.DisablePeerClick(Sender: TObject);
 var i: integer;
 begin
   if EnabledPeersList.Items.Count <> 0 then
-  for i := EnabledPeersList.Items.Count - 1 downto 0 do
-  if EnabledPeersList.Selected[i] then
   begin
-    DisabledPeersList.Items.Add(EnabledPeersList.Items[i]);
-    EnabledPeersList.Items.Delete(i);
+    log(0, 'disabling some peer(s)');
+    for i := EnabledPeersList.Items.Count - 1 downto 0 do
+      if EnabledPeersList.Selected[i] then
+      begin
+        DisabledPeersList.Items.Add(EnabledPeersList.Items[i]);
+        EnabledPeersList.Items.Delete(i);
+      end;
+    listChanged := true;
+    UpdateButtonsState;
   end;
-  listChanged := true;
-  UpdateButtonsState;
 end;
 
 
@@ -291,14 +302,17 @@ procedure TFormListListen.EnablePeerClick(Sender: TObject);
 var i: integer;
 begin
   if DisabledPeersList.Items.Count <> 0 then
-  for i := DisabledPeersList.Items.Count - 1 downto 0 do
-  if DisabledPeersList.Selected[i] then
   begin
-    EnabledPeersList.Items.Add(DisabledPeersList.Items[i]);
-    DisabledPeersList.Items.Delete(i);
+    log(0, 'enabling some peer(s)');
+    for i := DisabledPeersList.Items.Count - 1 downto 0 do
+      if DisabledPeersList.Selected[i] then
+      begin
+        EnabledPeersList.Items.Add(DisabledPeersList.Items[i]);
+        DisabledPeersList.Items.Delete(i);
+      end;
+    listChanged := true;
+    UpdateButtonsState;
   end;
-  listChanged := true;
-  UpdateButtonsState;
 end;
 
 

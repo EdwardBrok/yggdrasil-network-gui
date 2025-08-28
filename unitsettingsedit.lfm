@@ -1,7 +1,7 @@
 object FormSettings: TFormSettings
-  Left = 1351
+  Left = 1518
   Height = 642
-  Top = 164
+  Top = 177
   Width = 500
   BorderStyle = bsSingle
   Caption = 'FormSettings'
@@ -11,6 +11,7 @@ object FormSettings: TFormSettings
   DesignTimePPI = 120
   Position = poScreenCenter
   LCLVersion = '4.0.0.4'
+  OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormCreate
   object Main: TPageControl
@@ -74,6 +75,7 @@ object FormSettings: TFormSettings
           Width = 230
           MaxLength = 128
           TabOrder = 0
+          OnChange = RestartYggdrasilCommandChange
         end
         object LabelShutdown: TLabel
           Left = 10
@@ -89,6 +91,7 @@ object FormSettings: TFormSettings
           Width = 230
           MaxLength = 128
           TabOrder = 1
+          OnChange = ShutdownYggdrasilCommandChange
         end
       end
       object LabelUseCustom: TLabel
@@ -119,6 +122,7 @@ object FormSettings: TFormSettings
         Top = 30
         Width = 21
         TabOrder = 3
+        OnChange = UseSudoChange
       end
     end
     object OtherPage: TTabSheet
@@ -147,20 +151,65 @@ object FormSettings: TFormSettings
         Anchors = [akTop, akLeft, akRight]
         MaxLength = 0
         TabOrder = 0
+        OnChange = ConfigFilePathChange
       end
       object LabelAutostartEnabled: TLabel
         Left = 20
         Height = 20
-        Top = 80
+        Top = 94
         Width = 127
         Caption = 'Запуск с системой'
       end
       object AutostartEnabled: TCheckBox
         Left = 200
         Height = 20
-        Top = 76
+        Top = 92
         Width = 21
         TabOrder = 1
+        OnChange = AutostartEnabledChange
+      end
+      object LabelUpdateFrequency: TLabel
+        Left = 20
+        Height = 60
+        Top = 140
+        Width = 106
+        Caption = 'Частота '#10'обновления'#10'статистики (мс)'
+      end
+      object UpdateFrequency: TSpinEdit
+        Left = 200
+        Height = 28
+        Top = 160
+        Width = 92
+        MaxValue = 5000
+        MinValue = 250
+        TabOrder = 2
+        Value = 1000
+        OnChange = UpdateFrequencyChange
+      end
+      object LabelLogLevel: TLabel
+        Left = 20
+        Height = 40
+        Top = 240
+        Width = 121
+        Caption = 'Уровень'#10'журналирования'
+      end
+      object LogLevel: TComboBox
+        Left = 200
+        Height = 28
+        Top = 240
+        Width = 125
+        ItemHeight = 20
+        ItemIndex = 1
+        Items.Strings = (
+          'Debug'
+          'Info'
+          'Warning'
+          'Error'
+          'Fatal'
+        )
+        TabOrder = 3
+        Text = 'Info'
+        OnChange = LogLevelChange
       end
     end
   end

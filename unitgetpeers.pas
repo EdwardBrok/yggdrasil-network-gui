@@ -68,6 +68,7 @@ function TFormGetPeers.GetYggdrasilPeers: TStringList;
 var
   Process: TProcess;
 begin //неоптимизированный говнокод?
+  log(0, 'getting the peers statistic directly from the ygg service...');
   Result := TStringList.Create;
   Process := TProcess.Create(nil);
   try
@@ -81,9 +82,14 @@ begin //неоптимизированный говнокод?
     Process.Options := [poUsePipes, poWaitOnExit, poNoConsole];
     Process.Execute;
     Result.LoadFromStream(Process.Output);
-  finally
-    Process.Free;
+  except
+    on E: Exception do
+    begin
+      showmessage('Ошибка получения статистики по пирам: ' + E.Message);
+      log(3, 'Error at getting peers statistics: '+E.Message);
+    end;
   end;
+  Process.Free;
 end;
 
 
@@ -93,9 +99,11 @@ var
   RegEx: TRegExpr;
   Peer: TYggdrasilPeer;
 begin
+  log(0, 'Parsing output...');
   SetLength(Result, 0);
   RegEx := TRegExpr.Create;
   try
+    //RegEx.Expression := '^(\S+)\s+(\S+)\s+(\S+)\s*\t(\S+\s*|\s*)\t(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(.*)$';
     RegEx.Expression := '^(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(.*)$';
     for i := 1 to Output.Count - 1 do
     begin
@@ -119,9 +127,14 @@ begin
         Result[High(Result)] := Peer;
       end;
     end;
-  finally
-    RegEx.Free;
+  except
+    on E: Exception do
+    begin
+      showmessage('Ошибка парсинга статистики по пирам: ' + E.Message);
+      log(3, 'Error at parsing peers statistics: '+E.Message);
+    end;
   end;
+  Regex.Free;
 end;
 
 
@@ -132,6 +145,7 @@ var
   i: Integer;
   Item: TListItem;
 begin
+  log(0, 'Updating Peers table...');
   Output := GetYggdrasilPeers;
   try
     Peers := ParseYggdrasilPeers(Output);
@@ -153,20 +167,29 @@ begin
       Item.SubItems.Add(Peers[i].Cost);
       Item.SubItems.Add(Peers[i].LastError);
     end;
-  finally
-    Output.Free
+  except
+    on E: Exception do
+    begin
+      showmessage('Ошибка обновления таблицы статистики по пирам: ' + E.Message);
+      log(3, 'Error at updating table of peers statistics: '+E.Message);
+    end;
   end;
+
 end;
 
 
 procedure TFormGetPeers.FormCreate(Sender: TObject);
 begin
-  Caption := GlobalParameters.AppDisplayname + ' - Все узлы'; //нужна система локализации
+  log(0, 'FormGetPeers was created');
+  //Caption := GlobalParameters.AppDisplayname + ' - Все узлы'; //нужна система локализации
+  UpdatePeersTableTimer.Interval := Settings.UpdateFrequency;
+  //UpdatePeersTable();
 end;
 
 procedure TFormGetPeers.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
+  log(0, 'closing FormGetPeers...');
   CloseAction := caFree;
 end;
 

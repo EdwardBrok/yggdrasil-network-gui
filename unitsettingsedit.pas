@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls,
-  Buttons, EditBtn, GlobalParameters;
+  Buttons, EditBtn, Spin, GlobalParameters;
 
 type
 
@@ -17,10 +17,14 @@ type
     CancelButton: TButton;
     AutostartEnabled: TCheckBox;
     ConfigFilePath: TFileNameEdit;
+    LabelLogLevel: TLabel;
     LabelAutostartEnabled: TLabel;
+    LabelUpdateFrequency: TLabel;
     LabelUseSudo: TLabel;
+    LogLevel: TComboBox;
     OKButton: TButton;
     LabelConfigFilePath: TLabel;
+    UpdateFrequency: TSpinEdit;
     UseCustom: TCheckBox;
     InitSystem: TComboBox; //временно скрыто. если ненужность подтвердится, удалить
     RestartYggdrasilCommand: TEdit;
@@ -36,12 +40,21 @@ type
     UseSudo: TCheckBox;
     procedure ApplyButtonClick(Sender: TObject);
     procedure ApplySettings;
+    procedure AutostartEnabledChange(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure ConfigFilePathChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure LogLevelChange(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
+    procedure RestartYggdrasilCommandChange(Sender: TObject);
+    procedure ShutdownYggdrasilCommandChange(Sender: TObject);
     procedure UpdateCustomCommandsArea;
     procedure FormCreate(Sender: TObject);
     procedure InitSystemChange(Sender: TObject);
+    procedure UpdateFrequencyChange(Sender: TObject);
     procedure UseCustomChange(Sender: TObject);
+    procedure SetApplyButtonsState(state: boolean);
+    procedure UseSudoChange(Sender: TObject);
   private
 
   public
@@ -57,8 +70,21 @@ implementation
 
 { TFormSettings }
 
+procedure TFormSettings.SetApplyButtonsState(State: boolean);
+begin
+  log(0, 'FormSettings: setting apply buttons state to:' + booltostr(state, true));
+  OKButton.Enabled := state;
+  ApplyButton.Enabled := state;
+end;
+
+procedure TFormSettings.UseSudoChange(Sender: TObject);
+begin
+  SetApplyButtonsState(true);
+end;
+
 procedure TFormSettings.ApplySettings;
 begin
+  log(1, 'Applying new settings...');
   with Settings do
   begin
     //InitSystem := FormSettings.InitSystem.Text;
@@ -73,32 +99,65 @@ begin
     end;
     RestartCustomCommand := FormSettings.RestartYggdrasilCommand.Text;
     ShutdownCustomCommand := FormSettings.ShutdownYggdrasilCommand.Text;
+    UpdateFrequency := FormSettings.UpdateFrequency.Value;
+    LogLevel := FormSettings.LogLevel.ItemIndex;
   end;
 
-  SaveSettingsRecord
-  {$ifdef LINUX}
-  (getuserdir + '/.ygg-gui.dat');
-  {$endif}
-  {$ifdef MSWINDOWS}
-  (getuserdir + '\Documents\.ygg-gui.dat');
-  {$endif}
+  SaveSettingsRecord(SettingsFilePath);
+  SetApplyButtonsState(false);
 end;
+
+
+procedure TFormSettings.AutostartEnabledChange(Sender: TObject);
+begin
+  SetApplyButtonsState(true);
+end;
+
 
 procedure TFormSettings.ApplyButtonClick(Sender: TObject);
 begin
   ApplySettings;
 end;
 
+
 procedure TFormSettings.CancelButtonClick(Sender: TObject);
 begin
   close;
 end;
 
+procedure TFormSettings.ConfigFilePathChange(Sender: TObject);
+begin
+  SetApplyButtonsState(true);
+end;
+
+procedure TFormSettings.FormClose(Sender: TObject; var CloseAction: TCloseAction
+  );
+begin
+  log(0, 'closing the formSettings window.');
+end;
+
+procedure TFormSettings.LogLevelChange(Sender: TObject);
+begin
+  SetApplyButtonsState(true);
+end;
+
 procedure TFormSettings.OKButtonClick(Sender: TObject);
 begin
   ApplySettings;
+  log(0, 'Closing FormSettings window');
   Close;
 end;
+
+procedure TFormSettings.RestartYggdrasilCommandChange(Sender: TObject);
+begin
+  SetApplyButtonsState(true);
+end;
+
+procedure TFormSettings.ShutdownYggdrasilCommandChange(Sender: TObject);
+begin
+  SetApplyButtonsState(true);
+end;
+
 
 procedure TFormSettings.UpdateCustomCommandsArea;
 begin
@@ -137,6 +196,7 @@ begin
   end;
 end;
 
+
 procedure TFormSettings.FormCreate(Sender: TObject);
 begin
   InitSystem.Text := Settings.InitSystem;
@@ -144,16 +204,28 @@ begin
   UpdateCustomCommandsArea;
   ConfigFilePath.Text := Settings.ConfigFilePath;
   AutostartEnabled.Checked := Settings.AutostartEnabled;
-  Caption := GlobalParameters.AppDisplayname + ' - Настройки'; //нужна система локализации
+  UpdateFrequency.Value := Settings.UpdateFrequency;
+  LogLevel.ItemIndex := Settings.LogLevel;
+  //Caption := GlobalParameters.AppDisplayname + ' - Настройки'; //нужна система локализации
+  SetApplyButtonsState(false);
 end;
+
 
 procedure TFormSettings.InitSystemChange(Sender: TObject);
 begin
+  SetApplyButtonsState(true);
   UpdateCustomCommandsArea;
 end;
 
+procedure TFormSettings.UpdateFrequencyChange(Sender: TObject);
+begin
+  SetApplyButtonsState(true);
+end;
+
+
 procedure TFormSettings.UseCustomChange(Sender: TObject);
 begin
+  SetApplyButtonsState(true);
   CustomCommands.Enabled := UseCustom.Checked;
   if UseCustom.Checked then
   begin

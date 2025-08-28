@@ -11,7 +11,6 @@ uses
   Controls,
   Graphics,
   Dialogs,
-  ValEdit,
   StdCtrls,
   ExtCtrls,
   Process,
@@ -62,6 +61,7 @@ var process: TProcess;
   edits : Array of TEdit;
   i: integer;
 begin
+  log(0, 'showing FormThisNode');
   Caption := GlobalParameters.AppDisplayname + ' - Об этом узле';
   edits := [BuildNameEdit, BuildVerEdit, AddressEdit, SubnetEdit, RouteTableSizeEdit, PubKeyEdit];
 
@@ -113,6 +113,7 @@ end;
 
 procedure TFormThisNode.BuildNameEditClick(Sender: TObject);
 begin
+  log(0, 'FormThisNode: clicked ' + (Sender as TEdit).Name + ' and copied its value to clipboard');
   (Sender as TEdit).SelectAll;
   (Sender as TEdit).CopyToClipboard;
 end;

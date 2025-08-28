@@ -8,7 +8,13 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls,
   LCLIntf,
+  math,
   GlobalParameters;
+
+//resourcestring
+//  Version = 'Версия: ';
+//  Author = 'Автор: ';
+//  SourceCode = 'Исходный код:';
 
 type
 
@@ -26,6 +32,7 @@ type
     procedure CodebergLabelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure GithubLabelClick(Sender: TObject);
+//    procedure Image2Click(Sender: TObject);
     procedure PoweredByImageClick(Sender: TObject);
   private
 
@@ -46,7 +53,20 @@ procedure TFormAboutProgram.FormCreate(Sender: TObject);
 begin
   Caption := GlobalParameters.AppDisplayname + ' - О программе';
   DisplayNameLabel.Caption := AppDisplayName;
-  AppVersionLabel.Caption := AppVersionLabel.Caption + AppVersion;
+
+  //это тоже съезжает в сторону
+  with Image1 do begin
+    Left := ceil(FormAboutProgram.Width / 2) - floor(width / 2);
+  end;
+//  with Image2 do begin
+//    Left := ceil(FormAboutProgram.Width / 2) - ceil(width / 2);
+//  end;
+  with PoweredByImage do begin
+    Left := ceil(FormAboutProgram.Width / 2) - floor(width / 2);
+  end;
+  //AppVersionLabel.Caption := Version + AppVersion;
+  //AuthorLabel.Caption := Author + 'edikbrok';
+  //SourceCodeLabel.Caption := SourceCFormAboutProgram;
 end;
 
 procedure TFormAboutProgram.CodebergLabelClick(Sender: TObject);
@@ -58,6 +78,11 @@ procedure TFormAboutProgram.GithubLabelClick(Sender: TObject);
 begin
   OpenURL('https://github.com/EdwardBrok/yggdrasil-network-gui');
 end;
+
+//procedure TFormAboutProgram.Image2Click(Sender: TObject);
+//begin
+//  OpenURL('https://github.com/Revertron');
+//end;
 
 procedure TFormAboutProgram.PoweredByImageClick(Sender: TObject);
 begin

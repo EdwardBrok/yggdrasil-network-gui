@@ -12,9 +12,9 @@ uses
   Dialogs,
   ExtCtrls,
   Menus,
-  PopupNotifier,
-  StdCtrls,
-  Grids,
+  //PopupNotifier,
+  //StdCtrls,
+  //Grids,
   System.UITypes,
   {$ifdef MSWINDOWS}
   WinDirs,
@@ -94,14 +94,25 @@ begin
   ygg_installed := FileExists('/usr/bin/yggdrasil') or
                    DirectoryExists('/usr/lib/yggdrasil') or
                    FileExists('/usr/local/bin/yggdrasil');
+  log(0, 'Checking for Yggdrasil binary...');
+  log(0, 'Yggdrasil bin exists: ' + booltostr(ygg_installed, 'yes', 'no'));
   yggctl_installed := FileExists('/usr/bin/yggdrasilctl') or
                       DirectoryExists('/usr/lib/yggdrasilctl') or
                       FileExists('/usr/local/bin/yggdrasilctl');
+  log(0, 'Checking for Yggdrasil CTL binary...');
+  log(0, 'Yggdrasil CTL bin exists: ' + booltostr(ygg_installed, 'yes', 'no'));
+
   if not ygg_installed or not yggctl_installed then
-  YggdrasilNotFound.Execute();
+  begin
+    log(0, 'Ygg or Yggctl bin was not found. Showing dialog for this case.');
+    YggdrasilNotFound.Execute();
+  end;
 
   if GetStatusOfYggdrasilService = 'stopped' then
+  begin
     RestartYggdrasilService;
+    log(1, 'Yggdrasil service was not running. Trying to start it.');
+  end;
   {$endif}
   {$ifdef MSWINDOWS}
   ygg_installed := FileExists(GetWindowsSpecialDir(CSIDL_PROGRAM_FILES) + 'Yggdrasil\yggdrasil.exe');
@@ -112,7 +123,7 @@ begin
   if GetStatusOfYggdrasilService = 'stopped' then
     RunCommandOverride('sc start yggdrasil');
   {$endif}
-
+  log(1, 'YggGUI started.');
 end;
 
 
@@ -120,6 +131,7 @@ procedure TFormMain.MenuItem10Click(Sender: TObject);
 var form: TFormGetPeers;
 begin
   form := TFormGetPeers.Create(Application);
+  log(0, 'showing FormGetPeers');
   form.show();
 end;
 
@@ -128,18 +140,21 @@ var form: TFormThisNode;
 begin
   form := TFormThisNode.Create(Application);
   form.ShowModal;
-  form.free;
+  FreeAndNil(form);
+  log(0, 'formthisNode is closed and freed');
 end;
 
 
 procedure TFormMain.MenuItem12Click(Sender: TObject);
 begin
+  log(0, 'Asking of shutdown both of GUI and service...');
   AreYouSureFullShutdown.Execute;
 end;
 
 
 procedure TFormMain.MenuItem3Click(Sender: TObject);
 begin
+  log(0, 'Showing or setting focus on FormAboutProgram window');
   if FormAboutProgram.Visible then FormAboutProgram.SetFocus
   else FormAboutProgram.ShowModal;
 end;
@@ -147,7 +162,11 @@ end;
 
 procedure TFormMain.MenuItem5Click(Sender: TObject);
 begin
-  if FormSettings.Visible then FormSettings.SetFocus
+  log(0, 'Showing or setting focus on FormSettings window');
+  if FormSettings.Visible then
+  begin
+    FormSettings.SetFocus;
+  end
   else FormSettings.ShowModal;
 end;
 
@@ -156,11 +175,13 @@ var form: TFormListPeers;
 begin
   form := TFormListPeers.Create(Application);
   form.ShowModal;
-  form.Free;
+  FreeAndNil(form);
+  log(0, 'FormListPeers closed and freed');
 end;
 
 procedure TFormMain.MenuItem7Click(Sender: TObject);
 begin
+  log(0, 'asking about service restart...');
   AreYouSureReboot.Execute;
 end;
 
@@ -169,11 +190,14 @@ var form: TFormListListen;
 begin
   form := TFormListListen.Create(Application);
   form.ShowModal;
-  form.free;
+  FreeAndNil(form);
+  log(0, 'FormListListen closed and freed');
 end;
 
 procedure TFormMain.MenuItem9Click(Sender: TObject);
 begin
+  Log(1, 'Shutting down the GUI.');
+  LogFileStream.Free;
   Halt;
 end;
 

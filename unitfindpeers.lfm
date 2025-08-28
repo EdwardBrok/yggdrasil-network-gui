@@ -1,0 +1,295 @@
+object FormFindPeers: TFormFindPeers
+  Left = 676
+  Height = 673
+  Top = 130
+  Width = 1119
+  Caption = 'FormFindPeers'
+  ClientHeight = 673
+  ClientWidth = 1119
+  Constraints.MinHeight = 400
+  Constraints.MinWidth = 800
+  DesignTimePPI = 120
+  Position = poScreenCenter
+  LCLVersion = '4.0.0.4'
+  OnCreate = FormCreate
+  object LabelSelectCountry: TLabel
+    Left = 30
+    Height = 40
+    Top = 20
+    Width = 80
+    Caption = 'Фильтр'#10'по странам'
+  end
+  object SelectCountry: TComboBox
+    Left = 180
+    Height = 28
+    Top = 30
+    Width = 155
+    ItemHeight = 20
+    Items.Strings = (
+      ''
+    )
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 0
+    OnChange = SelectCountryChange
+  end
+  object ButtonConfirmAdding: TButton
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 30
+    Height = 52
+    Top = 600
+    Width = 168
+    Align = alCustom
+    Anchors = [akLeft, akBottom]
+    Caption = 'Импортировать'
+    Enabled = False
+    ModalResult = 1
+    TabOrder = 3
+  end
+  object CloseButton: TBitBtn
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 885
+    Height = 52
+    Top = 600
+    Width = 204
+    Anchors = [akRight, akBottom]
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 4
+  end
+  object PanelMain: TPanel
+    AnchorSideBottom.Side = asrBottom
+    Left = 30
+    Height = 487
+    Top = 90
+    Width = 1059
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ClientHeight = 487
+    ClientWidth = 1059
+    Enabled = False
+    TabOrder = 2
+    object PeersList: TTreeView
+      Left = 1
+      Height = 222
+      Top = 1
+      Width = 1057
+      Align = alTop
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      Constraints.MinHeight = 125
+      Constraints.MinWidth = 200
+      ReadOnly = True
+      RowSelect = True
+      ScrollBars = ssAutoBoth
+      SortType = stText
+      StateImages = Checkboxes
+      TabOrder = 2
+      Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+      OnClick = PeersListClick
+      OnSelectionChanged = PeersListSelectionChanged
+    end
+    object Splitter1: TSplitter
+      Cursor = crVSplit
+      Left = 1
+      Height = 6
+      Top = 223
+      Width = 1057
+      Align = alTop
+      ResizeAnchor = akTop
+    end
+    object PairSplitter1: TPairSplitter
+      Left = 1
+      Height = 257
+      Top = 229
+      Width = 1057
+      Align = alClient
+      Constraints.MinHeight = 125
+      Constraints.MinWidth = 200
+      Position = 540
+      object PairSplitterSide1: TPairSplitterSide
+        Cursor = crArrow
+        Left = 0
+        Height = 257
+        Top = 0
+        Width = 540
+        ClientWidth = 540
+        ClientHeight = 257
+        Constraints.MinWidth = 200
+        object PeerParamsList: TValueListEditor
+          Left = 0
+          Height = 257
+          Top = 0
+          Width = 540
+          Align = alClient
+          Constraints.MinWidth = 200
+          DefaultColWidth = 160
+          HeaderHotZones = [gzFixedCols, gzFixedCells]
+          RowCount = 9
+          ScrollBars = ssBoth
+          TabOrder = 0
+          Strings.Strings = (
+            ''
+            ''
+            ''
+            ''
+            ''
+            ''
+            ''
+            ''
+          )
+          ColWidths = (
+            160
+            355
+          )
+        end
+      end
+      object PairSplitterSide2: TPairSplitterSide
+        Cursor = crArrow
+        Left = 545
+        Height = 257
+        Top = 0
+        Width = 512
+        ClientWidth = 512
+        ClientHeight = 257
+        Constraints.MinWidth = 200
+        object SelectedPeers: TListView
+          Left = 0
+          Height = 257
+          Top = 0
+          Width = 512
+          Align = alClient
+          Columns = <          
+            item
+              Caption = 'Выбранные пиры'
+              Width = 510
+            end>
+          ReadOnly = True
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+          ViewStyle = vsReport
+        end
+      end
+    end
+  end
+  object PanelNoInternetConnection: TPanel
+    Left = 406
+    Height = 271
+    Top = 229
+    Width = 408
+    Anchors = []
+    ClientHeight = 271
+    ClientWidth = 408
+    TabOrder = 5
+    Visible = False
+    object LabelNoInternetConnection: TLabel
+      Left = 101
+      Height = 35
+      Top = 20
+      Width = 295
+      Alignment = taCenter
+      Anchors = [akTop]
+      AutoSize = False
+      Caption = 'Проблемы с соединением'
+      Font.Height = 24
+      Font.Name = 'Sans'
+      OptimalFill = True
+      ParentFont = False
+      Transparent = False
+      WordWrap = True
+    end
+    object LabelNoInternetDescription: TLabel
+      Left = 30
+      Height = 170
+      Top = 70
+      Width = 345
+      AutoSize = False
+      Caption = 'Не удается связаться с серверами со списком публичных нод. Проверьте интернет-соединение и повторите позднее.'
+      Font.Height = -19
+      Font.Name = 'Sans'
+      ParentFont = False
+      Transparent = False
+      WordWrap = True
+    end
+  end
+  object PanelPleaseWait: TPanel
+    Left = 412
+    Height = 218
+    Top = 249
+    Width = 396
+    Anchors = []
+    BorderStyle = bsSingle
+    ClientHeight = 214
+    ClientWidth = 392
+    ParentBackground = False
+    TabOrder = 1
+    Visible = False
+    object LabelPleaseWait: TLabel
+      Left = 90
+      Height = 35
+      Top = 20
+      Width = 286
+      Alignment = taCenter
+      Anchors = [akTop]
+      AutoSize = False
+      Caption = 'Пожалуйста, подождите...'
+      Font.Height = 24
+      Font.Name = 'Sans'
+      OptimalFill = True
+      ParentFont = False
+      Transparent = False
+      WordWrap = True
+    end
+    object ProgressBar: TProgressBar
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Side = asrBottom
+      Left = 24
+      Height = 25
+      Top = 169
+      Width = 342
+      Anchors = [akLeft, akRight, akBottom]
+      Style = pbstMarquee
+      TabOrder = 0
+    end
+    object LabelCurrentAction: TLabel
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Side = asrBottom
+      Left = 24
+      Height = 82
+      Top = 80
+      Width = 344
+      Anchors = [akLeft, akRight, akBottom]
+      AutoSize = False
+      Caption = 'some_action'
+      Font.Height = 20
+      Layout = tlBottom
+      ParentFont = False
+      Transparent = False
+      WordWrap = True
+    end
+  end
+  object TimerResponceNotReceived: TTimer
+    Enabled = False
+    Interval = 10000
+    OnTimer = TimerResponceNotReceivedTimer
+    Left = 420
+    Top = 30
+  end
+  object Checkboxes: TImageList
+    Left = 670
+    Top = 30
+    Bitmap = {
+      4C7A020000001000000010000000FE0000000000000078DAED93BF0E44401087
+      755AB55049243434346A7F1E63EF3ABDB7D0A93D825710CFA1566A1089203277
+      3B39C955777675EE26D9B0EBF74D88F90821774110FAE702C6D513426E3BABAA
+      2A84610851147D5C34A328CADEA3DBD9711CE168D1EC5B0F088200588B323B4F
+      DF89B528F3E7AFC19F9D9F93F38BFED03D8F3F2F073B0E7F91253FE2FFBAAEB0
+      2C0B97FFDBB6816DDB609A26D7FC15458139D775B978C7713047FBB0F2655962
+      46D775FC8E6F7C9224601806344D837BDFF73193E7F921FFE238C633CBB2A0AA
+      2ABC976519E6793EC44FD3049EE7E1B9288A784DD394C9FFB66D41D3347C2649
+      120CC3C0EC7F5DD7F8BFB32CBBB4FF0FFBC05B1F
+    }
+  end
+end

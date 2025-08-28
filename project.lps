@@ -2,13 +2,84 @@
 <CONFIG>
   <ProjectSession>
     <Version Value="12"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="linux">
+      <Item Name="windows">
+        <MacroValues Count="1">
+          <Macro2 Name="LCLWidgetType" Value="win32"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="yggdrasil-gui"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <TargetCPU Value="x86_64"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf3"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <Verbosity>
+              <ShowDebugInfo Value="True"/>
+            </Verbosity>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <Item Name="linux">
+        <MacroValues Count="1">
+          <Macro1 Name="LCLWidgetType" Value="qt5"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="yggdrasil-gui"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <TargetCPU Value="x86_64"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf3"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <Verbosity>
+              <ShowDebugInfo Value="True"/>
+            </Verbosity>
+          </Other>
+        </CompilerOptions>
+      </Item>
+      <SessionEnabledMatrixOptions Count="2">
+        <Item1 Mode="windows" Option="297738072635"/>
+        <Item2 Mode="linux" Option="521386814416"/>
+      </SessionEnabledMatrixOptions>
+    </BuildModes>
     <Units>
       <Unit>
         <Filename Value="project.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="49" Y="24"/>
+        <CursorPos X="21" Y="24"/>
         <UsageCount Value="210"/>
       </Unit>
       <Unit>
@@ -19,6 +90,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UnitMain"/>
         <EditorIndex Value="4"/>
+        <TopLine Value="89"/>
         <CursorPos X="15" Y="123"/>
         <UsageCount Value="210"/>
         <Loaded Value="True"/>
@@ -32,8 +104,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UnitGetPeers"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="61"/>
-        <CursorPos X="62" Y="81"/>
+        <TopLine Value="115"/>
+        <CursorPos X="40" Y="81"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -46,8 +118,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UnitListPeers"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="87"/>
-        <CursorPos X="85" Y="192"/>
+        <TopLine Value="88"/>
+        <CursorPos Y="91"/>
         <UsageCount Value="203"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -56,10 +128,9 @@
         <Filename Value="globalparameters.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="GlobalParameters"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="441"/>
-        <CursorPos Y="385"/>
+        <TopLine Value="233"/>
+        <CursorPos Y="248"/>
         <UsageCount Value="203"/>
         <Loaded Value="True"/>
       </Unit>
@@ -71,8 +142,8 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="5"/>
         <TopLine Value="48"/>
-        <CursorPos X="13" Y="72"/>
-        <UsageCount Value="175"/>
+        <CursorPos Y="72"/>
+        <UsageCount Value="181"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -84,9 +155,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="unitListListen"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="196"/>
-        <CursorPos X="24" Y="218"/>
-        <UsageCount Value="78"/>
+        <TopLine Value="35"/>
+        <CursorPos X="50" Y="51"/>
+        <UsageCount Value="84"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -100,7 +171,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="83"/>
         <CursorPos Y="106"/>
-        <UsageCount Value="75"/>
+        <UsageCount Value="81"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -111,9 +182,23 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="unitAboutProgram"/>
-        <TopLine Value="25"/>
-        <CursorPos Y="47"/>
-        <UsageCount Value="68"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="43"/>
+        <CursorPos Y="59"/>
+        <UsageCount Value="74"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="unitfindpeers.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormFindPeers"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="461"/>
+        <CursorPos X="17" Y="484"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -329,78 +414,28 @@
       </Unit>
       <Unit>
         <Filename Value="/usr/lib/fpc/src/rtl/objpas/sysutils/osutil.inc"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="74"/>
         <CursorPos X="3" Y="89"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/lazarus/fpc/3.2.2/source/rtl/objpas/math.pp"/>
+        <UnitName Value="Math"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="29" Y="5"/>
+        <UsageCount Value="11"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/lib/lazarus/lcl/interfaces/win32/win32int.pp"/>
+        <UnitName Value="Win32Int"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="15"/>
+        <CursorPos X="3" Y="32"/>
+        <UsageCount Value="10"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="421" TopLine="390"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="424" Column="23" TopLine="395"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="422" TopLine="395"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="423" TopLine="395"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="426" TopLine="395"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="72" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="73" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="74" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="76" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="77" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="79" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="71" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="80" TopLine="52"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="421" TopLine="401"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="428" TopLine="401"/>
-      </Position>
-      <Position>
-        <Filename Value="globalparameters.pas"/>
-        <Caret Line="421" TopLine="401"/>
-      </Position>
       <Position>
         <Filename Value="globalparameters.pas"/>
         <Caret Line="428" TopLine="401"/>
@@ -456,6 +491,70 @@
       <Position>
         <Filename Value="globalparameters.pas"/>
         <Caret Line="427" Column="117" TopLine="423"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="248" TopLine="223"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="248" Column="15" TopLine="223"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="249" TopLine="223"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="251" TopLine="223"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="265" TopLine="257"/>
+      </Position>
+      <Position>
+        <Filename Value="globalparameters.pas"/>
+        <Caret Line="266" TopLine="257"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="469" Column="66" TopLine="445"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="476" Column="16" TopLine="453"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="472" Column="17" TopLine="453"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="25" Column="8"/>
+      </Position>
+      <Position>
+        <Filename Value="unitaboutprogram.pas"/>
+        <Caret Line="48" TopLine="25"/>
+      </Position>
+      <Position>
+        <Filename Value="unitaboutprogram.pas"/>
+        <Caret Line="73" Column="49" TopLine="45"/>
+      </Position>
+      <Position>
+        <Filename Value="unitaboutprogram.pas"/>
+        <Caret Line="72" Column="49" TopLine="44"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="484" Column="52" TopLine="461"/>
+      </Position>
+      <Position>
+        <Filename Value="unitaboutprogram.pas"/>
+        <Caret Line="11" Column="8"/>
+      </Position>
+      <Position>
+        <Filename Value="unitaboutprogram.pas"/>
+        <Caret Line="65" Column="53" TopLine="43"/>
       </Position>
     </JumpHistory>
     <RunParams>

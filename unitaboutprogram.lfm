@@ -1,24 +1,23 @@
 object FormAboutProgram: TFormAboutProgram
-  Left = 1377
-  Height = 456
-  Top = 129
-  Width = 320
+  Left = 986
+  Height = 427
+  Top = 246
+  Width = 381
   BorderStyle = bsSingle
   Caption = 'FormAboutProgram'
-  ClientHeight = 456
-  ClientWidth = 320
-  DesignTimePPI = 120
+  ClientHeight = 427
+  ClientWidth = 381
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   object Image1: TImage
     AnchorSideLeft.Side = asrCenter
     AnchorSideRight.Side = asrCenter
-    Left = 104
-    Height = 112
-    Top = 10
-    Width = 112
-    Anchors = [akTop, akLeft, akRight]
+    Left = 146
+    Height = 90
+    Top = 8
+    Width = 89
+    Anchors = [akTop]
     Picture.Data = {
       0A544A706567496D616765B0480000FFD8FFE000104A46494600010100000100
       010000FFDB004300080606070605080707070909080A0C140D0C0B0B0C191213
@@ -610,14 +609,14 @@ object FormAboutProgram: TFormAboutProgram
     AnchorSideLeft.Side = asrCenter
     AnchorSideRight.Side = asrCenter
     Left = 0
-    Height = 44
-    Top = 132
-    Width = 320
+    Height = 35
+    Top = 106
+    Width = 381
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     AutoSize = False
     Caption = 'displayName'
-    Font.Height = -26
+    Font.Height = -21
     Font.Name = 'Sans'
     ParentFont = False
   end
@@ -626,8 +625,8 @@ object FormAboutProgram: TFormAboutProgram
     AnchorSideRight.Side = asrCenter
     Left = 0
     Height = 20
-    Top = 192
-    Width = 320
+    Top = 154
+    Width = 381
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     Caption = 'Версия: '
@@ -635,10 +634,10 @@ object FormAboutProgram: TFormAboutProgram
   object AuthorLabel: TLabel
     AnchorSideLeft.Side = asrCenter
     AnchorSideRight.Side = asrCenter
-    Left = 90
+    Left = 72
     Height = 20
-    Top = 216
-    Width = 141
+    Top = 173
+    Width = 238
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     Caption = 'Автор: edikbrok'
@@ -646,11 +645,12 @@ object FormAboutProgram: TFormAboutProgram
   object PoweredByImage: TImage
     AnchorSideLeft.Side = asrCenter
     AnchorSideRight.Side = asrCenter
-    Left = 96
-    Height = 59
-    Top = 380
-    Width = 128
-    Anchors = [akTop, akLeft, akRight]
+    AnchorSideBottom.Side = asrBottom
+    Left = 129
+    Height = 47
+    Top = 371
+    Width = 102
+    Anchors = [akBottom]
     Picture.Data = {
       1754506F727461626C654E6574776F726B477261706869635917000089504E47
       0D0A1A0A0000000D49484452000000660000002F08060000001188BFC6000000
@@ -848,23 +848,25 @@ object FormAboutProgram: TFormAboutProgram
   object SourceCodeLabel: TLabel
     AnchorSideLeft.Side = asrCenter
     AnchorSideRight.Side = asrCenter
-    Left = 92
+    AnchorSideBottom.Side = asrBottom
+    Left = 74
     Height = 20
-    Top = 310
-    Width = 136
+    Top = 315
+    Width = 233
     Alignment = taCenter
-    Anchors = [akTop, akLeft, akRight]
+    Anchors = [akLeft, akRight, akBottom]
     Caption = 'Исходный код:'
   end
   object GithubLabel: TLabel
     AnchorSideLeft.Side = asrCenter
     AnchorSideRight.Side = asrCenter
-    Left = 74
+    AnchorSideBottom.Side = asrBottom
+    Left = 59
     Height = 20
-    Top = 340
-    Width = 64
+    Top = 339
+    Width = 176
     Alignment = taCenter
-    Anchors = [akTop, akLeft, akRight]
+    Anchors = [akLeft, akRight, akBottom]
     Caption = 'GitHub'
     Font.Color = clBlue
     ParentColor = False
@@ -874,12 +876,13 @@ object FormAboutProgram: TFormAboutProgram
   object CodebergLabel: TLabel
     AnchorSideLeft.Side = asrCenter
     AnchorSideRight.Side = asrCenter
-    Left = 161
+    AnchorSideBottom.Side = asrBottom
+    Left = 129
     Height = 20
-    Top = 340
-    Width = 85
+    Top = 339
+    Width = 193
     Alignment = taCenter
-    Anchors = [akTop, akLeft, akRight]
+    Anchors = [akLeft, akRight, akBottom]
     Caption = 'Codeberg'
     Font.Color = clBlue
     ParentFont = False

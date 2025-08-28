@@ -21,7 +21,9 @@ uses
   {$endif}
   RegExpr;
 
+
 type
+  PSettings = ^TSettings;
   TSettings = Record
     //уже используются
     InitSystem: string[15];            //systemd, sysvinit, openrc, windows или другая
@@ -30,45 +32,91 @@ type
     UseCustomCommands: boolean;        //использование кастомных (нестандартных) команд
     RestartCustomCommand: string[128];
     ShutdownCustomCommand: string[128];
+    AutostartEnabled: boolean;
+    LogLevel: byte;
 
     //надо внедрить
-    AutostartEnabled: boolean;
     SettingsVersion: string[10];       //версия настроек - для переноса, обратной совместимости и т.д.
-    //Language: string[2];           //
-    //UpdateFrequency: 250 .. 5000;  //частота обновления в FormGetPeers, мс
+    //Language: string[2];               //
+    UpdateFrequency: integer;          //частота обновления в FormGetPeers, мс - от 250 до 5000
   end;
 
 
 const AppDisplayname: string = 'Yggdrasil GUI';
-const AppVersion : string    = '1.1.1';
-const SettingsVersionStamp   = '1.1';
+const AppVersion : string    = '1.2.3';
+const SettingsVersionStamp   = '1.3';
+const DefaultLogLevel = 0;
+const LogLevelsInText : Array[0..4] of string = ('DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL');
+
 
 var
-  Settings: TSettings; //запись с настройками - кмк проще хранить все
-                       //переменные параметров в одном типе
+  //запись с настройками - проще хранить все
+  //переменные параметров в одном типе
+  Settings: TSettings;
+  SettingsPtr: PSettings = nil;
+  SettingsFilePath: string;
+  LogFileStream: TFileStream;
+  LogFilePath: string;          //не может быть константой - получаем динамически при инициализации
+
 
 function  RunCommandOverride(const Command: string): string;
 function  GetInitSystem: string;
 procedure CreateSettingsRecord;
 procedure LoadSettingsRecord(const Path: string);
 procedure SaveSettingsRecord(const Path: string);
-function  ReadYggdrasilConf(const Path: string): TStringList;
+function  ReadYggdrasilConf: TStringList;
 procedure WriteYggdrasilConf(const Path: string; Data: TStringList; SenderObject: TComponent);
 procedure RestartYggdrasilService;
 procedure ShutdownYggdrasilService;
-function GetStatusOfYggdrasilService: string;
+function  GetStatusOfYggdrasilService: string;
 procedure ToggleAutostart(Enabled: boolean);
 procedure FirstLaunch;
 
+procedure Log(const Level: byte; message: string);
+procedure OpenLogFile;
+procedure CreateLogFile;
+
+
 implementation
 
+procedure Log(const Level: byte; message: string);
+var ExportMessage: string;
+begin
+                                      //в случае отсутствия записи
+                                      //настроек на момент вызова
+                                      //будет использован переданный уровень
+
+  if ((SettingsPtr = nil) or (Level >= Settings.LogLevel))
+     and
+     (Level < 5) then
+  begin
+    ExportMessage := '[' + FormatDateTime('YYYY-MM-DD hh:mm:ss.zzz', now) + '] '
+                     + '[' + LogLevelsInText[Level] + '] '
+                     + message + LineEnding;
+    try
+      LogFileStream.WriteBuffer(Pointer(ExportMessage)^, Length(ExportMessage));
+    except
+      on E: Exception do
+      begin
+        showmessage('Ошибка логгирования: ' + E.Message);
+      end;
+    end;
+  end
+  else if Level >= 5 then //5 или выше ничего не означают - можно использовать для вывода особых строк
+  begin
+    ExportMessage := message + lineending;
+    try
+      LogFileStream.WriteBuffer(Pointer(ExportMessage)^, Length(ExportMessage));
+    finally
+    end;
+  end;
+end;
 
 procedure CreateShortcut(LinkPath: string);
 {$ifdef LINUX}
-var Output: TStringList;
 begin
-  Output := TStringList.Create;
   try
+    Log(1, 'Creating autostart shortcut at '+LinkPath+'.');
     //запись во временный файл
     with TStringList.Create do
     try
@@ -83,8 +131,10 @@ begin
       Free;
     end;
   except
-    on E: Exception do
-    showmessage('Ошибка создания ярлыка для автозапуска: ' + E.Message);
+    on E: Exception do begin
+      Log(3, 'Error at creating shortcut: '+e.Message);
+      showmessage('Ошибка создания ярлыка для автозапуска: ' + E.Message);
+    end;
   end;
 end;
 {$endif}
@@ -110,6 +160,7 @@ var
   Process: TProcess;
   Output: TStringList;
 begin
+  Log(0, 'Running command: '+command);
   Process := TProcess.Create(nil);
   Output := TStringList.Create;
   {$ifdef LINUX}
@@ -151,6 +202,7 @@ function GetInitSystem: string;
 var outputstr: string;
     regex: TRegExpr;
 begin
+  log(0, 'Getting the name of init system...');
   regex := TRegExpr.Create;
   regex.Expression := '([a-zA-Z0-9\-\_\.]*)';
   regex.ModifierG:=true;
@@ -168,24 +220,59 @@ begin
   else
     GetInitSystem := outputstr;
   end;
+  log(0, 'Name of init system has been acquired: '+ outputstr);
+  regex.Free;
 end;
 {$endif}
 {$ifdef MSWINDOWS}
 begin
   GetInitSystem := 'windows';
+  log(0, 'Name of init system has been acquired. Init system: windows. there is no other possible initsys on windows :)' );
 end;
 {$endif}
 
+{%region logFileMethods}
+procedure OpenLogFile;
+begin
+  LogFileStream := TFileStream.Create(LogFilePath, fmOpenWrite or fmShareDenyWrite);
+  LogFileStream.Seek(0, soEnd);
+end;
 
-//загрузка существующей записи с настройками из файла
+procedure CreateLogFile;
+begin
+  {$ifdef LINUX}
+  if not DirectoryExists(getuserdir + '.var') then CreateDir(getuserdir + '.var');
+  if not DirectoryExists(getuserdir + '.var/log') then CreateDir(getuserdir + '.var/log');
+  {$endif}
+  {$ifdef MSWINDOWS}
+  if not DirectoryExists(getuserdir + '.var') then CreateDir(getuserdir + '.var');
+  if not DirectoryExists(getuserdir + '.var/log') then CreateDir(getuserdir + '.var/log');
+  {$endif}
+  LogFileStream := TFileStream.Create(LogFilePath, fmCreate);
+end;
+{%endregion}
+
+
+{%region settingsFileMethods}
 procedure LoadSettingsRecord(const Path: string);
 var SettingsFile: file of TSettings;
 begin
-  AssignFile(SettingsFile, Path);
-  FileMode := fmOpenReadWrite;
-  Reset(SettingsFile);
-  Read(SettingsFile, Settings);
-  CloseFile(SettingsFile);
+  try
+    Log(0, 'loading settings record...');
+    AssignFile(SettingsFile, Path);
+    FileMode := fmOpenReadWrite;
+    Reset(SettingsFile);
+    Read(SettingsFile, Settings);
+    CloseFile(SettingsFile);
+
+    SettingsPtr := @Settings;
+  except
+    on E:Exception do
+    begin
+      log(3, 'Error at loading existing settings record: '+ e.Message);
+    end;
+  end;
+  log(0, 'settings record loaded.');
 end;
 
 
@@ -198,12 +285,16 @@ begin
   try
     Rewrite(SettingsFile);
     Write(SettingsFile, Settings);
-  finally
-    Close(SettingsFile);
+  except
+    on E: Exception do
+    begin
+      log(3, 'Error at saving settings record: ' + e.Message);
+    end;
   end;
+  Close(SettingsFile);
 end;
 {$endif}
-{$ifdef MSWINDOWS} //assignfile() не работает
+{$ifdef MSWINDOWS} //assignfile() не работает корректно в windows
 var OutStream: TFileStream;
 begin
   try
@@ -213,7 +304,10 @@ begin
     OutStream.Free;
   except
     on E: EInOutError do
+    begin
+      log(3, 'Error at saving settings record: ' + E.ClassName + '/' + E.Message);
       showmessage('File handling error occurred. Details: ' + E.ClassName + '/' + E.Message);
+    end;
   end;
 end;
 {$endif}
@@ -226,12 +320,11 @@ begin
   with NewSettingsRecord do
   begin
     InitSystem := GetInitSystem;
-    ConfigFilePath :=
     {$ifdef LINUX}
-    '/etc/yggdrasil.conf';
+    ConfigFilePath := '/etc/yggdrasil.conf';
     {$endif}
     {$ifdef MSWINDOWS}
-    GetWindowsSpecialDir(CSIDL_COMMON_APPDATA) + 'Yggdrasil\yggdrasil.conf';
+    ConfigFilePath := GetWindowsSpecialDir(CSIDL_COMMON_APPDATA) + 'Yggdrasil\yggdrasil.conf';
     {$endif}
 
     SettingsVersion := SettingsVersionStamp;
@@ -240,26 +333,26 @@ begin
     RestartCustomCommand := '';
     ShutdownCustomCommand := '';
     AutostartEnabled := false;
+    UpdateFrequency := 1000;
+    LogLevel := 1; //1 == info
   end;
   Settings := NewSettingsRecord;
-  {$ifdef LINUX}
-  SaveSettingsRecord(getuserdir + '/.ygg-gui.dat');
-  {$endif}
-  {$ifdef MSWINDOWS}
-  SaveSettingsRecord(getuserdir + 'Documents\.ygg-gui.dat'); //запись в бибилиотеку Документы
-  {$endif}
+  SettingsPtr := @Settings;
+  SaveSettingsRecord(SettingsFilePath);
 end;
+{%endregion}
 
-
-
-function ReadYggdrasilConf(const Path: string): TStringList;
+{%region yggConfFileMethods}
+function ReadYggdrasilConf: TStringList;
 begin
   Result := TStringList.Create;
   try
-    Result.LoadFromFile(Path);
+    Result.LoadFromFile(Settings.ConfigFilePath);
   except
-    on E: Exception do
+    on E: Exception do begin
+      log(3, 'Error at reading Yggdrasil CONF file: '+ E.Message);
       ShowMessage('Ошибка чтения файла: ' + E.Message);
+    end;
   end;
 end;
 
@@ -272,7 +365,7 @@ var Proc: TProcess;
   Output: TStringList;
 begin
   Output := TStringList.Create;
-  TempFile := GetTempFileName('', 'config_');
+  TempFile := GetTempFileName('', 'ygg_config_');
 
   try
     //запись во временный файл
@@ -297,7 +390,10 @@ begin
       Output.LoadFromStream(Proc.Stderr);
 
       if Proc.ExitStatus <> 0 then
+      begin
+        log(3, 'Failed to write new config with error ' + floattostr(Proc.ExitStatus) + ': ' + Output.Text);
         showMessage('Не удалось перезаписать конфиг.'' Код ошибки: ' + floattostr(Proc.ExitStatus) + '. Сообщение: ' + Output.Text);
+      end;
     finally
       Proc.Free;
     end;
@@ -312,17 +408,22 @@ begin
     Data.SaveToFile(Path);
   except
     on E: Exception do
+    begin
+      log(3, 'Failed to write new config: ' + E.Message);
       ShowMessage('Не удалось перезаписать конфиг. Сообщение: ' + E.Message);
+    end;
   end;
 end;
 {$endif}
+{%endregion}
 
-
+{%region yggServiceMethods}
 procedure RestartYggdrasilService;
 var command, outputstr: string;
 begin
   try
     {$ifdef LINUX}
+    log(0, 'Restarting the service...');
     if Settings.UseCustomCommands then
     begin
         if Settings.UseSudo then
@@ -346,10 +447,15 @@ begin
       outputstr := RunCommandOverride(command);
 
       if (outputstr = 'initsys-not-implemented')
-      then showmessage('К сожалению, для вашей системы инициализации пока нет реализации. Сделайте это вручную. (А лучше помогите проекту:>)');
+      then begin
+        showmessage('К сожалению, для вашей системы инициализации пока нет реализации. Сделайте это вручную. (А лучше помогите проекту:>)');
+        log(2, 'Unfortunately there was no implementation for your init system. Do it by yourself. Or help the project.');
+      end;
       {$endif}
       {$ifdef MSWINDOWS}
+      log(0, 'Stopping the service...');
       RunCommandOverride('sc stop yggdrasil');
+      log(0, 'Starting the service...');
       RunCommandOverride('sc start yggdrasil');
       {$endif}
     end;
@@ -362,6 +468,8 @@ procedure ShutdownYggdrasilService;
 var command, outputstr: string;
 begin
   try
+    log(0, 'Stopping the service...');
+
     {$ifdef LINUX}
     if Settings.UseCustomCommands then
     begin
@@ -385,7 +493,10 @@ begin
 
       outputstr := RunCommandOverride(command);
       if outputstr = 'initsys-not-identified' then
+      begin
+        log(2, 'Unfortunately there was no implementation for your init system. Do it by yourself. Or help the project.');
         showmessage('Для вашей системы инициализации нет реализации :(\n Сделайте это вручную.');
+      end;
       {$endif}
       {$ifdef MSWINDOWS}
       RunCommandOverride('sc stop yggdrasil');
@@ -400,6 +511,7 @@ function GetStatusOfYggdrasilService: string;
 {$ifdef LINUX}
 var command, output: string;
 begin
+  log(1, 'Checking the Yggdrasil service state...');
   case Settings.InitSystem of
     'systemd':  command := 'systemctl is-active yggdrasil >/dev/null && echo running || echo stopped';
     'sysvinit': command := 'service yggdrasil status >/dev/null 2>&1 && echo running || echo stopped';
@@ -408,32 +520,60 @@ begin
   end;
   output := copy(RunCommandOverride(command), 1, 7);
   if output = 'ISUnkwn' then
-    showmessage('Для вашей системы инициализации нет реализации :(\n Программа требует работающей службы Yggdrasil и хотела ее запустить. Сделайте это вручную.')
+  begin
+    showmessage('Для вашей системы инициализации нет реализации :(\n Программа требует работающей службы Yggdrasil в обязательном порядке.');
+    log(2, 'Unfortunately there is no implementation for your init system. Please start the Yggdrasil service by yourself.');
+  end
+
   else
     GetStatusOfYggdrasilService := output;
 end;
 {$endif}
 {$ifdef MSWINDOWS}
 begin
+  log(1, 'Checking the Yggdrasil service state...');
   GetStatusOfYggdrasilService := copy(RunCommandOverride('sc query yggdrasil | find /c "RUNNING" >nul && echo running || echo stopped'), 1, 7);
 end;
 {$endif}
+{%endregion}
 
 
 procedure ToggleAutostart(Enabled: boolean);
 {$ifdef LINUX}
 begin
-  if Enabled then CreateShortcut(SysUtils.GetEnvironmentVariable('HOME') + '/.config/autostart/yggdrasil-gui.desktop')
-  else RunCommandOverride('rm $HOME/.config/autostart/yggdrasil-gui.desktop');
+  log(0, 'Setting YggGUI autostart to: ' + booltostr(Enabled));
+
+  if Enabled then
+  begin
+    log(0, 'Creating the autostart file...');
+    CreateShortcut(SysUtils.GetEnvironmentVariable('HOME') + '/.config/autostart/yggdrasil-gui.desktop')
+  end
+  else
+  begin
+    log(0, 'Deleting the autostart file...');
+    RunCommandOverride('rm $HOME/.config/autostart/yggdrasil-gui.desktop');
+  end;
 end;
 {$endif}
 {$ifdef MSWINDOWS}
 var LinkPath: string;
 begin
+  Log(0, 'getting the autostart file path...');
   LinkPath := GetWindowsSpecialDir(CSIDL_STARTUP) + AppDisplayName + '.lnk';
+  log(0, 'autostart file path: '+ linkpath);
 
-  if Enabled then CreateShortcut(LinkPath)
-  else DeleteFile(PChar(LinkPath));
+  log(0, 'Setting YggGUI autostart to: ' + booltostr(Enabled));
+
+  if Enabled then
+  begin
+    log(0, 'Creating the autostart file...');
+    CreateShortcut(LinkPath)
+  end
+  else
+  begin
+    log(0, 'Deleting the autostart file...');
+    DeleteFile(PChar(LinkPath));
+  end;
 end;
 {$endif}
 
@@ -444,6 +584,7 @@ procedure SetYggdrasilServiceRights; //ONLY WINDOWS
 var sid: string;
   regex: TRegExpr;
 begin
+  log(0, 'Setting up the Yggdrasil service rights... (this is a must for right work)');
   regex := tregexpr.Create;
   try
     regex.Expression := 'S-1-5-21-[0-9]{10}-[0-9]{10}-[0-9]{10}-[0-9]{4}';
@@ -471,13 +612,28 @@ end;
 initialization
 
 {$ifdef LINUX}
-if not FileExists(getuserdir + '/.ygg-gui.dat') then Firstlaunch
-else LoadSettingsRecord(getuserdir + '/.ygg-gui.dat');
+LogFilePath := getuserdir + '.var/log/ygg-gui.log';
+SettingsFilePath := getuserdir + '/.ygg-gui.dat';
 {$endif}
 {$ifdef MSWINDOWS}
-if not FileExists(getuserdir + 'Documents\.ygg-gui.dat') then FirstLaunch
-else LoadSettingsRecord(getuserdir + 'Documents\.ygg-gui.dat');
+LogFilePath := getuserdir + 'Documents\.ygg-gui.log';
+SettingsFilePath := getuserdir + 'Documents\.ygg-gui.dat';
 {$endif}
+
+if not FileExists(LogFilePath)
+then
+  CreateLogFile
+else
+  OpenLogFile;
+
+log(9, lineending +'======= '+ FormatDateTime('YYYY-MM-DD hh:mm', now) +' =========================================');
+
+if not FileExists(SettingsFilePath)
+then
+  Firstlaunch
+else
+  LoadSettingsRecord(SettingsFilePath);
+
 
 end.
 

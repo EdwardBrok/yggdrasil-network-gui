@@ -4,6 +4,7 @@ program project;
 
 uses
   {$IFDEF UNIX}
+  cmem,
   cthreads,
   {$ENDIF}
   {$IFDEF HASAMIGA}
@@ -21,8 +22,7 @@ uses
   unitlistpeers,
   globalparameters, 
   unitsettingsedit, 
-  unitlistlisten, unitthisnode, unitaboutprogram
-  { you can add units after this };
+  unitlistlisten, unitthisnode, unitaboutprogram, unitfindpeers;
 
 {$R *.res}
 

@@ -1,11 +1,11 @@
 object FormListPeers: TFormListPeers
-  Left = 1323
-  Height = 480
-  Top = 203
-  Width = 530
+  Left = 1481
+  Height = 556
+  Top = 216
+  Width = 531
   Caption = 'FormListPeers'
-  ClientHeight = 480
-  ClientWidth = 530
+  ClientHeight = 556
+  ClientWidth = 531
   Constraints.MinHeight = 400
   Constraints.MinWidth = 530
   DesignTimePPI = 120
@@ -16,18 +16,18 @@ object FormListPeers: TFormListPeers
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
     Left = 10
-    Height = 231
+    Height = 287
     Top = 50
-    Width = 508
+    Width = 509
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 231
-    ClientWidth = 508
+    ClientHeight = 287
+    ClientWidth = 509
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
     object DisabledPeersList: TListBox
       Left = 1
-      Height = 229
+      Height = 285
       Top = 1
       Width = 250
       Align = alLeft
@@ -39,9 +39,9 @@ object FormListPeers: TFormListPeers
     end
     object EnabledPeersList: TListBox
       Left = 257
-      Height = 229
+      Height = 285
       Top = 1
-      Width = 250
+      Width = 251
       Align = alClient
       Constraints.MinWidth = 250
       ItemHeight = 0
@@ -52,7 +52,7 @@ object FormListPeers: TFormListPeers
     object Splitter1: TSplitter
       AnchorSideLeft.Side = asrCenter
       Left = 251
-      Height = 229
+      Height = 285
       Top = 1
       Width = 6
     end
@@ -61,8 +61,8 @@ object FormListPeers: TFormListPeers
     AnchorSideBottom.Side = asrBottom
     Left = 168
     Height = 28
-    Top = 357
-    Width = 218
+    Top = 433
+    Width = 219
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 0
     OnChange = AddPeerEditChange
@@ -70,9 +70,9 @@ object FormListPeers: TFormListPeers
   object AddPeerOKButton: TBitBtn
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 408
+    Left = 409
     Height = 35
-    Top = 350
+    Top = 426
     Width = 100
     Anchors = [akRight, akBottom]
     Default = True
@@ -86,7 +86,7 @@ object FormListPeers: TFormListPeers
     AnchorSideBottom.Side = asrBottom
     Left = 20
     Height = 20
-    Top = 359
+    Top = 435
     Width = 109
     Anchors = [akLeft, akBottom]
     Caption = 'Добавить пира:'
@@ -94,9 +94,9 @@ object FormListPeers: TFormListPeers
   object EnablePeer: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 278
-    Height = 50
-    Top = 290
+    Left = 279
+    Height = 69
+    Top = 347
     Width = 80
     Anchors = [akRight, akBottom]
     Caption = '->'
@@ -106,9 +106,9 @@ object FormListPeers: TFormListPeers
   object DisablePeer: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 368
-    Height = 50
-    Top = 290
+    Left = 369
+    Height = 69
+    Top = 347
     Width = 80
     Anchors = [akRight, akBottom]
     Caption = '<-'
@@ -124,7 +124,7 @@ object FormListPeers: TFormListPeers
   end
   object Label2: TLabel
     AnchorSideRight.Side = asrBottom
-    Left = 362
+    Left = 363
     Height = 20
     Top = 10
     Width = 146
@@ -137,7 +137,7 @@ object FormListPeers: TFormListPeers
     AnchorSideBottom.Side = asrBottom
     Left = 20
     Height = 50
-    Top = 419
+    Top = 495
     Width = 120
     Anchors = [akLeft, akBottom]
     Caption = 'Сохранить'
@@ -149,7 +149,7 @@ object FormListPeers: TFormListPeers
     AnchorSideBottom.Side = asrBottom
     Left = 150
     Height = 50
-    Top = 419
+    Top = 495
     Width = 130
     Anchors = [akLeft, akBottom]
     Caption = 'Применить'
@@ -160,9 +160,9 @@ object FormListPeers: TFormListPeers
   object CancelButton: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 394
+    Left = 395
     Height = 50
-    Top = 419
+    Top = 495
     Width = 114
     Anchors = [akRight, akBottom]
     Caption = 'Отмена'
@@ -172,26 +172,91 @@ object FormListPeers: TFormListPeers
   object RemovePeer: TBitBtn
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 458
-    Height = 50
-    Top = 290
+    Left = 459
+    Height = 69
+    Top = 347
     Width = 50
     Anchors = [akRight, akBottom]
     Cancel = True
-    Kind = bkCancel
+    Glyph.Data = {
+      76060000424D7606000000000000360000002800000014000000140000000100
+      2000000000004006000064000000640000000000000000000000FFFFFF00FFFF
+      FF00FFFFFF000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000FFFFFF00FFFFFF00FFFFFF00000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0500000000000000000000000000000000000000000000000000FFFFFF000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000050000202A5FF0202A5FF01019200000016000000
+      00000000000000000000FFFFFF00FFFFFF000000000000000000000000000101
+      98000404A7FF01018C00000000000000000000000000000000000303A2FF5454
+      D8FF8282EFFF3232C1FF0303A6FF00007E0000000000FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF000202A7001A1AB4FF6060E4FF0A0AABFF000094000000
+      000000000000000093001515B0FF9191F6FF5C5CF3FF8D8DF7FF4747CFFF0101
+      A5FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000303A7001D1DB5FF8D8D
+      F3FF8383F6FF7373E9FF0404A8FF0000A4000000A4000303A8FF6969E2FF6969
+      F4FF4040F1FF9090F7FF1E1EB6FF0000A400FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF000404A9FF5C5CDDFF7C7CF6FF3C3CF1FF7F7FF6FF5E5EDEFF0303
+      A8FF0000A4002121B8FF8F8FF7FF3E3EF1FF6E6EF5FF6161DEFF0303A8FFFFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000A4000A0AAAFF8383
+      EFFF6161F4FF4343F1FF8A8AF7FF4646D0FF0000A4FF7777E9FF5F5FF4FF4646
+      F2FF9090F5FF0E0EACFF0000A400FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF000101A5001717B2FF8E8EF4FF5C5CF4FF5959F3FF8E8E
+      F6FF8282EEFF8484F6FF3B3BF1FF7979F5FF5252D4FF0303A8FFFFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000303
+      A7FF2D2DBEFF8F8FF6FF5C5CF4FF5656F3FF5B5BF3FF3D3DF1FF4D4DF2FF8A8A
+      F2FF0707A9FF0000A400FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF000000A4000303A8FF4949CEFF8A8AF6FF5F5F
+      F3FF5656F3FF3B3BF1FF5151F3FF7B7BE8FF0202A7FF0000A400FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF000000A4000303A8FF6969E1FF7B7BF5FF6666F4FF5A5AF3FF3D3DF1FF8D8D
+      F7FF3D3DC9FF0303A8FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000303A9FF5D5DDDFF7C7C
+      F5FF6C6CF5FF7373F5FF6565F4FF4C4CF2FF9090F6FF2323B9FF0202A600FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF000000A4001313B0FF9292F6FF7272F5FF7878F5FF8C8CF5FF9090F5FF6E6E
+      F5FF6060F4FF8B8BF2FF1010ADFF0000A400FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000303A8FF6969E2FF7F7FF6FF7575
+      F5FF9494F7FF2121B6FF2A2ABCFF9191F6FF7676F5FF7A7AF5FF7C7CECFF0606
+      A8FF0000A400FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000
+      A4002020B7FF9292F6FF7676F5FF8383F7FF6666E1FF0303A8FF0303A9FF4B4B
+      D0FF8E8EF7FF7B7BF5FF8888F6FF6262DEFF0303A8FFFFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF000303A8FF7575E8FF7B7BF6FF7C7CF6FF9292
+      F6FF1212AFFF0000A4000000A4000303A8FF6B6BE3FF8888F6FF8F8FF7FF5B5B
+      DEFF0303A8FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000000A4000101
+      A5FF8686F0FF8888F6FF8A8AF7FF5656DAFF0303A9FFFFFFFF00FFFFFF000000
+      A4000808AAFF7D7DEEFF5B5BDBFF0202A7FF0000A400FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF000202A7000808A9FF5757D7FF7F7FEFFF0808
+      AAFF0000A400FFFFFF00FFFFFF00FFFFFF000000A5000101A6FF0303A8FF0000
+      A400FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF000000A4000303A8FF0202A7FF0303A800FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF000000A4000000A400FFFFFF00FFFFFF00FFFFFF00
+    }
+    GlyphShowMode = gsmAlways
     TabOrder = 8
     OnClick = RemovePeerClick
   end
   object ClearSelection: TButton
     AnchorSideBottom.Side = asrBottom
-    Left = 20
-    Height = 50
-    Top = 290
-    Width = 230
+    Left = 130
+    Height = 69
+    Top = 347
+    Width = 120
     Anchors = [akLeft, akBottom]
-    Caption = 'Сбросить выделение'
+    Caption = 'Убр.'#10'выбор'
     TabOrder = 9
     OnClick = ClearSelectionClick
+  end
+  object FindPeers: TButton
+    AnchorSideBottom.Side = asrBottom
+    Left = 10
+    Height = 69
+    Top = 347
+    Width = 110
+    Anchors = [akLeft, akBottom]
+    Caption = 'Найти'#10'пиров'
+    TabOrder = 10
+    OnClick = FindPeersClick
   end
   object AtCloseQueryDlg: TTaskDialog
     Buttons = <>
@@ -201,11 +266,10 @@ object FormListPeers: TFormListPeers
     MainIcon = tdiQuestion
     RadioButtons = <>
     QueryItemIndex = 0
-    Text = 'Обновить список пиров и выйти?'
-    VerificationText = 'Перезагрузить службу'
+    Text = 'Откатить изменения списка пиров для подключения и выйти?'
     OnButtonClicked = AtCloseQueryDlgButtonClicked
-    Left = 50
-    Top = 330
+    Left = 320
+    Top = 490
   end
   object RemovePeerDlg: TTaskDialog
     Buttons = <>
@@ -216,7 +280,7 @@ object FormListPeers: TFormListPeers
     QueryItemIndex = 0
     Text = 'Стереть выделенных пиров из конфигурации?'
     OnButtonClicked = RemovePeerDlgButtonClicked
-    Left = 10
-    Top = 330
+    Left = 130
+    Top = 450
   end
 end

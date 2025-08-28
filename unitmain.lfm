@@ -1,7 +1,7 @@
 object FormMain: TFormMain
-  Left = 1297
+  Left = 1467
   Height = 354
-  Top = 231
+  Top = 233
   Width = 298
   Caption = 'FormMain'
   DesignTimePPI = 120

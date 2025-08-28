@@ -1,11 +1,11 @@
 object FormThisNode: TFormThisNode
-  Left = 1269
-  Height = 389
-  Top = 264
+  Left = 1450
+  Height = 384
+  Top = 260
   Width = 451
   BorderStyle = bsSingle
   Caption = 'FormThisNode'
-  ClientHeight = 389
+  ClientHeight = 384
   ClientWidth = 451
   DesignTimePPI = 120
   Position = poScreenCenter

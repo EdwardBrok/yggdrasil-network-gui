@@ -13,17 +13,13 @@ uses
   Graphics,
   Dialogs,
   StdCtrls,
-  CheckLst,
   MaskEdit,
   Buttons,
   ExtCtrls,
-  EditBtn,
-  Grids,
-  ValEdit,
-  LvlGraphCtrl,
   RegExpr,
   System.UITypes,
-  GlobalParameters;
+  GlobalParameters,
+  UnitFindPeers;
 
 type
 
@@ -36,6 +32,7 @@ type
     ApplyButton: TButton;
     AtCloseQueryDlg: TTaskDialog;
     ClearSelection: TButton;
+    FindPeers: TButton;
     RemovePeer: TBitBtn;
     CancelButton: TButton;
     DisabledPeersList: TListBox;
@@ -51,6 +48,7 @@ type
     procedure ApplyPeersList;
     procedure ClearSelectionClick(Sender: TObject);
     procedure EnabledPeersListSelectionChange(Sender: TObject; User: boolean);
+    procedure FindPeersClick(Sender: TObject);
     procedure RemovePeerClick(Sender: TObject);
     procedure ApplyButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
@@ -87,10 +85,11 @@ procedure TFormListPeers.ApplyPeersList;
 var prevConf, newConf, newPeersField: TStringList;
   i: integer;
 begin
+  log(1, 'Rewriting Peers section in config...');
   newConf := TStringList.Create;
   newPeersField := TStringList.Create;
 
-  prevConf := ReadYggdrasilConf(Settings.ConfigFilePath);
+  prevConf := ReadYggdrasilConf;
 
   //создание новых строк для значения поля Peers
   newPeersField.Add('  Peers: [');
@@ -108,18 +107,45 @@ begin
   WriteYggdrasilConf(Settings.ConfigFilePath, newConf, FormListPeers);
 
   prevPeersField := newPeersField; //обновление предыдущего списка пиров - нет смысла заново читать файл
+  log(0, 'Peers section has been rewritten to the config with amount of ' + inttostr(EnabledPeersList.Count + DisabledPeersList.Count) + ' peers.');
 end;
 
 procedure TFormListPeers.ClearSelectionClick(Sender: TObject);
 begin
   DisabledPeersList.ClearSelection;
   EnabledPeersList.ClearSelection;
+  log(0, 'FormListPeers: selection cleared');
 end;
 
 
 procedure TFormListPeers.EnabledPeersListSelectionChange(Sender: TObject; User: boolean);
 begin
   UpdateButtonsState;
+end;
+
+procedure TFormListPeers.FindPeersClick(Sender: TObject);
+var
+  form: TFormFindPeers;
+  i: integer;
+begin
+  form := TFormFindPeers.Create(FormListPeers as TComponent);
+  if form.ShowModal = mrOK then
+  begin
+      if form.SelectedPeersList.Count > 1 then
+      begin
+        i := 0;
+        while i < form.SelectedPeersList.Count do
+          begin
+            EnabledPeersList.Items.Add(form.SelectedPeersList.Strings[i]);
+            i := i + 1;
+          end
+      end
+      else
+      if form.SelectedPeersList.Count = 1 then
+        EnabledPeersList.Items.Add(form.SelectedPeersList.Strings[0]);
+  end;
+  FreeAndNil(form);
+  log(0, 'FormFindPeers closed and freed');
 end;
 
 
@@ -145,8 +171,10 @@ end;
 
 
 procedure TFormListPeers.OKButtonClick(Sender: TObject);
+var MsgWindow : TComponent;
 begin
   ApplyPeersList;
+  RestartYggdrasilService;
   close;
 end;
 
@@ -157,6 +185,7 @@ var i: integer;
 begin
    if AModalResult = mrYes then
    begin
+     log(0, 'FormListPeers: removing peers from the columns');
      if EnabledPeersList.Items.Count <> 0 then
        for i := EnabledPeersList.Items.Count - 1 downto 0 do
          if EnabledPeersList.Selected[i] then
@@ -175,6 +204,7 @@ end;
 
 procedure TFormListPeers.UpdateButtonsState;
 begin
+  log(0, 'updating buttons state in FormListPeers');
   RemovePeer.Enabled := (EnabledPeersList.SelCount > 0) or (DisabledPeersList.SelCount > 0);
   DisablePeer.Enabled := (EnabledPeersList.SelCount > 0) and (EnabledPeersList.Focused);
   EnablePeer.Enabled := (DisabledPeersList.SelCount > 0) and (DisabledPeersList.Focused);
@@ -189,6 +219,7 @@ var Config: TStringList;
   tempStrArr: TStringArray;
   s, t: string;
 begin
+  log(0, 'showing FormListPeers');
   Caption := GlobalParameters.AppDisplayname + ' - Изменение пиров для подключения';
   ListChanged := false;
   Config := TStringList.Create;
@@ -199,7 +230,7 @@ begin
   regex.ModifierG := true;
   regex.ModifierM := true;
 
-  Config := ReadYggdrasilConf(Settings.ConfigFilePath);
+  Config := ReadYggdrasilConf;
   try
     if regex.Exec(Config.Text) and (regex.Match[1] <> '') then
     begin
@@ -233,6 +264,7 @@ begin
    if AModalResult = mrYes then
    begin
      applypeerslist;
+     RestartYggdrasilService;
      close;
    end;
 end;
