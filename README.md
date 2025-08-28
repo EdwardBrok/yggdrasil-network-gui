@@ -11,10 +11,23 @@ The program provides convenient access to network settings and statistics via th
 
 ---
 
+## 📎 Dependencies
+
+### Any system:
+- Yggdrasil Network
+### 🐧 Linux:
+- Qt5Pas (it should be in your package manager)
+### 🪟 Windows:
+- [Indy's OpenSSL](http://indy.fulgan.com/SSL/) (the 64bit DLLs must be alongside with yggdrasil-gui_windows64.exe)
+  Note: you need only **ssleay32.dll** and **libeay32.dll**. They should be archived in .zip files.   
+
+---
+
 ## 📦 Installation and launch
 1. **Yggdrasil** must be [installed separately](https://yggdrasil-network.github.io/installation.html).  
-2. Download the latest version of **Yggdrasil GUI** from [releases](https://github.com/EdwardBrok/yggdrasil-network-gui/releases).  
-3. Run the executable file (the program is portable, no installation is required).  
+2. Download the latest version of **Yggdrasil GUI** from [releases](https://github.com/EdwardBrok/yggdrasil-network-gui/releases).
+3. Satisfy all dependencies for YggGUI on your system.  
+4. Run the executable file (no installation is required).  
 
 ---
 
@@ -22,8 +35,9 @@ The program provides convenient access to network settings and statistics via th
 After launching, the program appears in the system tray. Available Functions:
 - ⚙️ Yggdrasil configuration change  
 - 🌐 View information about the node (IP, keys)  
-- Statistics of active connections  
-- 🔄 Restarting the service  
+- 📊 Statistics of active connections  
+- 🔄 Restarting the service
+- 📩 Importing peers from the [public peers list]('https://publicpeers.neilalexander.dev/publicnodes.json')  
 - ❌ Yggdrasil stop  
 
 ---
