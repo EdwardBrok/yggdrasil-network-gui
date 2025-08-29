@@ -1,68 +1,69 @@
 object FormListPeers: TFormListPeers
   Left = 1481
-  Height = 556
+  Height = 445
   Top = 216
-  Width = 531
+  Width = 425
   Caption = 'FormListPeers'
-  ClientHeight = 556
-  ClientWidth = 531
-  Constraints.MinHeight = 400
-  Constraints.MinWidth = 530
-  DesignTimePPI = 120
+  ClientHeight = 445
+  ClientWidth = 425
+  Constraints.MinHeight = 320
+  Constraints.MinWidth = 424
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   object Panel1: TPanel
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 10
-    Height = 287
-    Top = 50
-    Width = 509
+    Left = 8
+    Height = 230
+    Top = 40
+    Width = 407
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 287
-    ClientWidth = 509
+    ClientHeight = 230
+    ClientWidth = 407
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
     object DisabledPeersList: TListBox
       Left = 1
-      Height = 285
+      Height = 228
       Top = 1
-      Width = 250
+      Width = 200
       Align = alLeft
-      Constraints.MinWidth = 250
+      Constraints.MinWidth = 200
       ItemHeight = 0
       MultiSelect = True
       TabOrder = 0
+      TopIndex = -1
       OnSelectionChange = EnabledPeersListSelectionChange
     end
     object EnabledPeersList: TListBox
-      Left = 257
-      Height = 285
+      Left = 206
+      Height = 228
       Top = 1
-      Width = 251
+      Width = 200
       Align = alClient
-      Constraints.MinWidth = 250
+      Constraints.MinWidth = 200
       ItemHeight = 0
       MultiSelect = True
       TabOrder = 1
+      TopIndex = -1
       OnSelectionChange = EnabledPeersListSelectionChange
     end
     object Splitter1: TSplitter
       AnchorSideLeft.Side = asrCenter
-      Left = 251
-      Height = 285
+      Left = 201
+      Height = 228
       Top = 1
-      Width = 6
+      Width = 5
     end
   end
   object AddPeerEdit: TEdit
     AnchorSideBottom.Side = asrBottom
-    Left = 168
+    Left = 134
     Height = 28
-    Top = 433
-    Width = 219
+    Top = 341
+    Width = 176
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 0
     OnChange = AddPeerEditChange
@@ -70,10 +71,10 @@ object FormListPeers: TFormListPeers
   object AddPeerOKButton: TBitBtn
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 409
-    Height = 35
-    Top = 426
-    Width = 100
+    Left = 327
+    Height = 28
+    Top = 341
+    Width = 80
     Anchors = [akRight, akBottom]
     Default = True
     DefaultCaption = True
@@ -84,20 +85,20 @@ object FormListPeers: TFormListPeers
   end
   object AddPeerLabel: TLabel
     AnchorSideBottom.Side = asrBottom
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 435
-    Width = 109
+    Top = 344
+    Width = 114
     Anchors = [akLeft, akBottom]
     Caption = 'Добавить пира:'
   end
   object EnablePeer: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 279
-    Height = 69
-    Top = 347
-    Width = 80
+    Left = 223
+    Height = 55
+    Top = 278
+    Width = 64
     Anchors = [akRight, akBottom]
     Caption = '->'
     TabOrder = 3
@@ -106,28 +107,28 @@ object FormListPeers: TFormListPeers
   object DisablePeer: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 369
-    Height = 69
-    Top = 347
-    Width = 80
+    Left = 295
+    Height = 55
+    Top = 278
+    Width = 64
     Anchors = [akRight, akBottom]
     Caption = '<-'
     TabOrder = 4
     OnClick = DisablePeerClick
   end
   object Label1: TLabel
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 10
-    Width = 139
+    Top = 8
+    Width = 144
     Caption = 'Отключенные пиры'
   end
   object Label2: TLabel
     AnchorSideRight.Side = asrBottom
-    Left = 363
+    Left = 257
     Height = 20
-    Top = 10
-    Width = 146
+    Top = 8
+    Width = 150
     Alignment = taRightJustify
     Anchors = [akTop, akRight]
     Caption = 'Используемые пиры'
@@ -135,10 +136,10 @@ object FormListPeers: TFormListPeers
   object OKButton: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 20
-    Height = 50
-    Top = 495
-    Width = 120
+    Left = 16
+    Height = 40
+    Top = 396
+    Width = 96
     Anchors = [akLeft, akBottom]
     Caption = 'Сохранить'
     Enabled = False
@@ -147,10 +148,10 @@ object FormListPeers: TFormListPeers
   end
   object ApplyButton: TButton
     AnchorSideBottom.Side = asrBottom
-    Left = 150
-    Height = 50
-    Top = 495
-    Width = 130
+    Left = 120
+    Height = 40
+    Top = 396
+    Width = 104
     Anchors = [akLeft, akBottom]
     Caption = 'Применить'
     Enabled = False
@@ -160,10 +161,10 @@ object FormListPeers: TFormListPeers
   object CancelButton: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 395
-    Height = 50
-    Top = 495
-    Width = 114
+    Left = 316
+    Height = 40
+    Top = 396
+    Width = 91
     Anchors = [akRight, akBottom]
     Caption = 'Отмена'
     TabOrder = 7
@@ -172,10 +173,10 @@ object FormListPeers: TFormListPeers
   object RemovePeer: TBitBtn
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 459
-    Height = 69
-    Top = 347
-    Width = 50
+    Left = 367
+    Height = 55
+    Top = 278
+    Width = 40
     Anchors = [akRight, akBottom]
     Cancel = True
     Glyph.Data = {
@@ -238,10 +239,10 @@ object FormListPeers: TFormListPeers
   end
   object ClearSelection: TButton
     AnchorSideBottom.Side = asrBottom
-    Left = 130
-    Height = 69
-    Top = 347
-    Width = 120
+    Left = 104
+    Height = 55
+    Top = 278
+    Width = 96
     Anchors = [akLeft, akBottom]
     Caption = 'Убр.'#10'выбор'
     TabOrder = 9
@@ -249,10 +250,10 @@ object FormListPeers: TFormListPeers
   end
   object FindPeers: TButton
     AnchorSideBottom.Side = asrBottom
-    Left = 10
-    Height = 69
-    Top = 347
-    Width = 110
+    Left = 8
+    Height = 55
+    Top = 278
+    Width = 88
     Anchors = [akLeft, akBottom]
     Caption = 'Найти'#10'пиров'
     TabOrder = 10
@@ -268,8 +269,8 @@ object FormListPeers: TFormListPeers
     QueryItemIndex = 0
     Text = 'Откатить изменения списка пиров для подключения и выйти?'
     OnButtonClicked = AtCloseQueryDlgButtonClicked
-    Left = 320
-    Top = 490
+    Left = 256
+    Top = 392
   end
   object RemovePeerDlg: TTaskDialog
     Buttons = <>
@@ -280,7 +281,7 @@ object FormListPeers: TFormListPeers
     QueryItemIndex = 0
     Text = 'Стереть выделенных пиров из конфигурации?'
     OnButtonClicked = RemovePeerDlgButtonClicked
-    Left = 130
-    Top = 450
+    Left = 104
+    Top = 360
   end
 end

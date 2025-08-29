@@ -1,0 +1,2 @@
+LIBEAY32         RCDATA "libeay32.dll"
+SSLEAY32         RCDATA "ssleay32.dll"

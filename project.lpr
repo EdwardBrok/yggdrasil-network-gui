@@ -25,6 +25,9 @@ uses
   unitlistlisten, unitthisnode, unitaboutprogram, unitfindpeers;
 
 {$R *.res}
+{$IFDEF MSWINDOWS}
+  {$R win_dlls.rc}
+{$ENDIF}
 
 begin
   RequireDerivedFormResource:=True;

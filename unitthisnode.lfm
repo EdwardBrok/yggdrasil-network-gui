@@ -1,118 +1,117 @@
 object FormThisNode: TFormThisNode
   Left = 1450
-  Height = 384
+  Height = 307
   Top = 260
-  Width = 451
+  Width = 361
   BorderStyle = bsSingle
   Caption = 'FormThisNode'
-  ClientHeight = 384
-  ClientWidth = 451
-  DesignTimePPI = 120
+  ClientHeight = 307
+  ClientWidth = 361
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   object PropertiesLabel: TLabel
-    Left = 20
-    Height = 27
-    Top = 20
-    Width = 232
+    Left = 16
+    Height = 20
+    Top = 16
+    Width = 186
     Caption = 'Свойства этого узла:'
-    Font.Height = -24
+    Font.Height = -19
     Font.Name = 'Sans'
     ParentFont = False
   end
   object BuildNameLabel: TLabel
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 75
-    Width = 79
+    Top = 60
+    Width = 83
     Caption = 'Имя билда:'
   end
   object BuildVerLabel: TLabel
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 120
-    Width = 99
+    Top = 96
+    Width = 103
     Caption = 'Версия билда:'
   end
   object AddressLabel: TLabel
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 180
-    Width = 122
+    Top = 144
+    Width = 128
     Caption = 'Адрес в Yggdrasil:'
   end
   object SubnetLabel: TLabel
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 230
-    Width = 60
+    Top = 184
+    Width = 64
     Caption = 'Подсеть:'
   end
   object PubKeyLabel: TLabel
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 280
-    Width = 123
+    Top = 224
+    Width = 128
     Caption = 'Публичный ключ:'
   end
   object RouteTableSizeLabel: TLabel
-    Left = 20
+    Left = 16
     Height = 40
-    Top = 320
-    Width = 116
+    Top = 256
+    Width = 122
     Caption = 'Размер таблицы'#10'маршрутизации:'
   end
   object BuildNameEdit: TEdit
-    Left = 210
+    Left = 168
     Height = 28
-    Top = 65
-    Width = 220
+    Top = 52
+    Width = 176
     ReadOnly = True
     TabOrder = 0
     OnClick = BuildNameEditClick
   end
   object BuildVerEdit: TEdit
-    Left = 210
+    Left = 168
     Height = 28
-    Top = 110
-    Width = 220
+    Top = 88
+    Width = 176
     ReadOnly = True
     TabOrder = 1
     OnClick = BuildNameEditClick
   end
   object AddressEdit: TEdit
-    Left = 210
+    Left = 168
     Height = 28
-    Top = 170
-    Width = 220
+    Top = 136
+    Width = 176
     ReadOnly = True
     TabOrder = 2
     OnClick = BuildNameEditClick
   end
   object SubnetEdit: TEdit
-    Left = 210
+    Left = 168
     Height = 28
-    Top = 220
-    Width = 220
+    Top = 176
+    Width = 176
     ReadOnly = True
     TabOrder = 3
     OnClick = BuildNameEditClick
   end
   object PubKeyEdit: TEdit
-    Left = 210
+    Left = 168
     Height = 28
-    Top = 280
-    Width = 220
+    Top = 224
+    Width = 176
     ReadOnly = True
     TabOrder = 4
     OnClick = BuildNameEditClick
   end
   object RouteTableSizeEdit: TEdit
-    Left = 210
+    Left = 168
     Height = 28
-    Top = 335
-    Width = 220
+    Top = 268
+    Width = 176
     ReadOnly = True
     TabOrder = 5
     OnClick = BuildNameEditClick

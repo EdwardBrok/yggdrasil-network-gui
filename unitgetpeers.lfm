@@ -1,74 +1,66 @@
 object FormGetPeers: TFormGetPeers
   Left = 0
-  Height = 432
+  Height = 346
   Top = 695
-  Width = 1371
+  Width = 1097
   Caption = 'FormGetPeers'
-  ClientHeight = 432
-  ClientWidth = 1371
-  DesignTimePPI = 120
+  ClientHeight = 346
+  ClientWidth = 1097
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
+  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   object ListView1: TListView
-    Left = 10
-    Height = 366
-    Top = 10
-    Width = 1351
+    Left = 8
+    Height = 293
+    Top = 8
+    Width = 1081
     Anchors = [akTop, akLeft, akRight, akBottom]
     Columns = <    
       item
         Caption = 'URI'
-        Width = 375
+        Width = 300
       end    
       item
         Caption = 'State'
-        Width = 62
       end    
       item
         Caption = 'Dir'
-        Width = 62
       end    
       item
         Caption = 'IP Address'
-        Width = 375
+        Width = 300
       end    
       item
         Caption = 'Uptime'
-        Width = 125
+        Width = 100
       end    
       item
         Caption = 'RTT'
-        Width = 88
+        Width = 70
       end    
       item
         Caption = 'RX'
-        Width = 62
       end    
       item
         Caption = 'TX'
-        Width = 62
       end    
       item
         Caption = 'Down'
-        Width = 75
+        Width = 60
       end    
       item
         Caption = 'Up'
-        Width = 62
       end    
       item
         Caption = 'Pr'
-        Width = 62
       end    
       item
         Caption = 'Cost'
-        Width = 62
       end    
       item
         Caption = 'Last Error'
-        Width = 246
+        Width = 197
       end>
     GridLines = True
     Items.LazData = {
@@ -87,7 +79,7 @@ object FormGetPeers: TFormGetPeers
   end
   object UpdatePeersTableTimer: TTimer
     OnTimer = UpdatePeersTableTimerTimer
-    Left = 16344
-    Top = 40
+    Left = 13075
+    Top = 32
   end
 end

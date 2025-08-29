@@ -87,8 +87,12 @@ implementation
 
 
 procedure TFormMain.FormCreate(Sender: TObject);
-var ygg_installed, yggctl_installed: boolean;
-//  output: string;
+var
+  ygg_installed, yggctl_installed: boolean;
+  {$IFDEF MSWINDOWS}
+  S: TResourceStream;
+  F: TFileStream;
+  {$ENDIF}
 begin
   {$ifdef LINUX}
   ygg_installed := FileExists('/usr/bin/yggdrasil') or
@@ -108,6 +112,8 @@ begin
     YggdrasilNotFound.Execute();
   end;
 
+
+
   if GetStatusOfYggdrasilService = 'stopped' then
   begin
     RestartYggdrasilService;
@@ -117,8 +123,45 @@ begin
   {$ifdef MSWINDOWS}
   ygg_installed := FileExists(GetWindowsSpecialDir(CSIDL_PROGRAM_FILES) + 'Yggdrasil\yggdrasil.exe');
   yggctl_installed := FileExists(GetWindowsSpecialDir(CSIDL_PROGRAM_FILES) + 'Yggdrasil\yggdrasilctl.exe');
+
   if not ygg_installed or not yggctl_installed then
   YggdrasilNotFound.Execute();
+
+  //вынужденное извращение
+  if not FileExists('.\libeay32.dll') then
+  begin
+    //LIBEAY32                                       //windows.RT_RCDATA - чтобы не тянуть лишний модуль из-за сраной константы
+    S := TResourceStream.Create(HInstance, 'LIBEAY32', MAKEINTRESOURCE(10));
+    try
+      F := TFileStream.Create(ExtractFilePath(ParamStr(0)) + 'libeay32.dll', fmCreate);
+      try
+        F.CopyFrom(S, S.Size);
+      finally
+        F.Free;
+      end;
+    finally
+      S.Free;
+      log(1, 'deployed libeay32.dll alongwith the ygg-gui exe');
+    end;
+  end;
+
+  if not FileExists('.\ssleay32.dll') then
+  begin
+    //SSLEAY32                                       //windows.RT_RCDATA
+    S := TResourceStream.Create(HInstance, 'SSLEAY32', MAKEINTRESOURCE(10));
+    try
+      F := TFileStream.Create(ExtractFilePath(ParamStr(0)) + 'ssleay32.dll', fmCreate);
+      try
+        F.CopyFrom(S, S.Size);
+      finally
+        F.Free;
+      end;
+    finally
+      S.Free;
+      log(1, 'deployed ssleay32.dll alongwith the ygg-gui exe');
+    end;
+  end;
+
 
   if GetStatusOfYggdrasilService = 'stopped' then
     RunCommandOverride('sc start yggdrasil');

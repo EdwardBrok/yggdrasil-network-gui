@@ -1,11 +1,11 @@
 object FormFindPeers: TFormFindPeers
-  Left = 676
-  Height = 673
-  Top = 130
-  Width = 1119
+  Left = 602
+  Height = 672
+  Top = 212
+  Width = 1125
   Caption = 'FormFindPeers'
-  ClientHeight = 673
-  ClientWidth = 1119
+  ClientHeight = 672
+  ClientWidth = 1125
   Constraints.MinHeight = 400
   Constraints.MinWidth = 800
   DesignTimePPI = 120
@@ -38,7 +38,7 @@ object FormFindPeers: TFormFindPeers
     AnchorSideBottom.Side = asrBottom
     Left = 30
     Height = 52
-    Top = 600
+    Top = 599
     Width = 168
     Align = alCustom
     Anchors = [akLeft, akBottom]
@@ -50,9 +50,9 @@ object FormFindPeers: TFormFindPeers
   object CloseButton: TBitBtn
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 885
+    Left = 891
     Height = 52
-    Top = 600
+    Top = 599
     Width = 204
     Anchors = [akRight, akBottom]
     Cancel = True
@@ -64,19 +64,19 @@ object FormFindPeers: TFormFindPeers
   object PanelMain: TPanel
     AnchorSideBottom.Side = asrBottom
     Left = 30
-    Height = 487
+    Height = 486
     Top = 90
-    Width = 1059
+    Width = 1065
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 487
-    ClientWidth = 1059
+    ClientHeight = 486
+    ClientWidth = 1065
     Enabled = False
     TabOrder = 2
     object PeersList: TTreeView
       Left = 1
-      Height = 222
+      Height = 221
       Top = 1
-      Width = 1057
+      Width = 1063
       Align = alTop
       Anchors = [akTop, akLeft, akRight, akBottom]
       Constraints.MinHeight = 125
@@ -95,16 +95,16 @@ object FormFindPeers: TFormFindPeers
       Cursor = crVSplit
       Left = 1
       Height = 6
-      Top = 223
-      Width = 1057
+      Top = 222
+      Width = 1063
       Align = alTop
       ResizeAnchor = akTop
     end
     object PairSplitter1: TPairSplitter
       Left = 1
       Height = 257
-      Top = 229
-      Width = 1057
+      Top = 228
+      Width = 1063
       Align = alClient
       Constraints.MinHeight = 125
       Constraints.MinWidth = 200
@@ -148,23 +148,23 @@ object FormFindPeers: TFormFindPeers
       end
       object PairSplitterSide2: TPairSplitterSide
         Cursor = crArrow
-        Left = 545
+        Left = 546
         Height = 257
         Top = 0
-        Width = 512
-        ClientWidth = 512
+        Width = 517
+        ClientWidth = 517
         ClientHeight = 257
         Constraints.MinWidth = 200
         object SelectedPeers: TListView
           Left = 0
           Height = 257
           Top = 0
-          Width = 512
+          Width = 517
           Align = alClient
           Columns = <          
             item
               Caption = 'Выбранные пиры'
-              Width = 510
+              Width = 512
             end>
           ReadOnly = True
           ScrollBars = ssAutoVertical
@@ -175,27 +175,26 @@ object FormFindPeers: TFormFindPeers
     end
   end
   object PanelNoInternetConnection: TPanel
-    Left = 406
-    Height = 271
-    Top = 229
+    Left = 420
+    Height = 272
+    Top = 234
     Width = 408
     Anchors = []
-    ClientHeight = 271
+    ClientHeight = 272
     ClientWidth = 408
     TabOrder = 5
     Visible = False
     object LabelNoInternetConnection: TLabel
-      Left = 101
+      Left = 73
       Height = 35
       Top = 20
-      Width = 295
+      Width = 345
       Alignment = taCenter
       Anchors = [akTop]
       AutoSize = False
       Caption = 'Проблемы с соединением'
       Font.Height = 24
       Font.Name = 'Sans'
-      OptimalFill = True
       ParentFont = False
       Transparent = False
       WordWrap = True
@@ -215,29 +214,29 @@ object FormFindPeers: TFormFindPeers
     end
   end
   object PanelPleaseWait: TPanel
-    Left = 412
-    Height = 218
-    Top = 249
-    Width = 396
+    Left = 420
+    Height = 222
+    Top = 252
+    Width = 408
     Anchors = []
     BorderStyle = bsSingle
-    ClientHeight = 214
-    ClientWidth = 392
+    ClientHeight = 218
+    ClientWidth = 404
     ParentBackground = False
     TabOrder = 1
     Visible = False
+    OnClick = PanelPleaseWaitClick
     object LabelPleaseWait: TLabel
-      Left = 90
-      Height = 35
-      Top = 20
-      Width = 286
+      Left = 24
+      Height = 28
+      Top = 24
+      Width = 356
       Alignment = taCenter
       Anchors = [akTop]
       AutoSize = False
       Caption = 'Пожалуйста, подождите...'
-      Font.Height = 24
+      Font.Height = 26
       Font.Name = 'Sans'
-      OptimalFill = True
       ParentFont = False
       Transparent = False
       WordWrap = True
@@ -247,8 +246,8 @@ object FormFindPeers: TFormFindPeers
       AnchorSideBottom.Side = asrBottom
       Left = 24
       Height = 25
-      Top = 169
-      Width = 342
+      Top = 173
+      Width = 356
       Anchors = [akLeft, akRight, akBottom]
       Style = pbstMarquee
       TabOrder = 0
@@ -257,17 +256,14 @@ object FormFindPeers: TFormFindPeers
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Side = asrBottom
       Left = 24
-      Height = 82
-      Top = 80
-      Width = 344
+      Height = 75
+      Top = 88
+      Width = 356
       Anchors = [akLeft, akRight, akBottom]
       AutoSize = False
-      Caption = 'some_action'
-      Font.Height = 20
+      Caption = 'action'
       Layout = tlBottom
-      ParentFont = False
       Transparent = False
-      WordWrap = True
     end
   end
   object TimerResponceNotReceived: TTimer

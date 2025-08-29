@@ -13,7 +13,7 @@ object FormAboutProgram: TFormAboutProgram
   object Image1: TImage
     AnchorSideLeft.Side = asrCenter
     AnchorSideRight.Side = asrCenter
-    Left = 146
+    Left = 138
     Height = 90
     Top = 8
     Width = 89

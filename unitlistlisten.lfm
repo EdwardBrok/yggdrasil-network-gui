@@ -1,68 +1,69 @@
 object FormListListen: TFormListListen
   Left = 1496
-  Height = 480
+  Height = 384
   Top = 193
-  Width = 530
+  Width = 424
   Caption = 'FormListListen'
-  ClientHeight = 480
-  ClientWidth = 530
-  Constraints.MinHeight = 400
-  Constraints.MinWidth = 530
-  DesignTimePPI = 120
+  ClientHeight = 384
+  ClientWidth = 424
+  Constraints.MinHeight = 320
+  Constraints.MinWidth = 424
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   object Panel1: TPanel
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 10
-    Height = 231
-    Top = 50
-    Width = 508
+    Left = 8
+    Height = 185
+    Top = 40
+    Width = 406
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 231
-    ClientWidth = 508
+    ClientHeight = 185
+    ClientWidth = 406
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object DisabledPeersList: TListBox
       Left = 1
-      Height = 229
+      Height = 183
       Top = 1
-      Width = 250
+      Width = 200
       Align = alLeft
-      Constraints.MinWidth = 250
+      Constraints.MinWidth = 200
       ItemHeight = 0
       MultiSelect = True
       TabOrder = 0
+      TopIndex = -1
       OnSelectionChange = EnabledPeersListSelectionChange
     end
     object EnabledPeersList: TListBox
-      Left = 257
-      Height = 229
+      Left = 206
+      Height = 183
       Top = 1
-      Width = 250
+      Width = 200
       Align = alClient
-      Constraints.MinWidth = 250
+      Constraints.MinWidth = 200
       ItemHeight = 0
       MultiSelect = True
       TabOrder = 1
+      TopIndex = -1
       OnSelectionChange = EnabledPeersListSelectionChange
     end
     object Splitter1: TSplitter
       AnchorSideLeft.Side = asrCenter
-      Left = 251
-      Height = 229
+      Left = 201
+      Height = 183
       Top = 1
-      Width = 6
+      Width = 5
     end
   end
   object AddPeerEdit: TEdit
     AnchorSideBottom.Side = asrBottom
-    Left = 178
+    Left = 142
     Height = 28
-    Top = 357
-    Width = 208
+    Top = 280
+    Width = 167
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 1
     OnChange = AddPeerEditChange
@@ -70,10 +71,10 @@ object FormListListen: TFormListListen
   object AddPeerOKButton: TBitBtn
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 408
-    Height = 35
-    Top = 350
-    Width = 100
+    Left = 326
+    Height = 28
+    Top = 280
+    Width = 80
     Anchors = [akRight, akBottom]
     Default = True
     DefaultCaption = True
@@ -84,20 +85,20 @@ object FormListListen: TFormListListen
   end
   object AddPeerLabel: TLabel
     AnchorSideBottom.Side = asrBottom
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 359
-    Width = 114
+    Top = 283
+    Width = 120
     Anchors = [akLeft, akBottom]
     Caption = 'Добавить адрес:'
   end
   object EnablePeer: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 278
-    Height = 50
-    Top = 290
-    Width = 80
+    Left = 222
+    Height = 40
+    Top = 232
+    Width = 64
     Anchors = [akRight, akBottom]
     Caption = '->'
     TabOrder = 3
@@ -106,28 +107,28 @@ object FormListListen: TFormListListen
   object DisablePeer: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 368
-    Height = 50
-    Top = 290
-    Width = 80
+    Left = 294
+    Height = 40
+    Top = 232
+    Width = 64
     Anchors = [akRight, akBottom]
     Caption = '<-'
     TabOrder = 4
     OnClick = DisablePeerClick
   end
   object Label1: TLabel
-    Left = 20
+    Left = 16
     Height = 20
-    Top = 10
-    Width = 142
+    Top = 8
+    Width = 148
     Caption = 'Не прослушиваются'
   end
   object Label2: TLabel
     AnchorSideRight.Side = asrBottom
-    Left = 387
+    Left = 280
     Height = 20
-    Top = 10
-    Width = 121
+    Top = 8
+    Width = 126
     Alignment = taRightJustify
     Anchors = [akTop, akRight]
     Caption = 'Прослушиваются'
@@ -135,10 +136,10 @@ object FormListListen: TFormListListen
   object OKButton: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 20
-    Height = 50
-    Top = 419
-    Width = 120
+    Left = 16
+    Height = 40
+    Top = 335
+    Width = 96
     Anchors = [akLeft, akBottom]
     Caption = 'Сохранить'
     Enabled = False
@@ -147,10 +148,10 @@ object FormListListen: TFormListListen
   end
   object ApplyButton: TButton
     AnchorSideBottom.Side = asrBottom
-    Left = 150
-    Height = 50
-    Top = 419
-    Width = 130
+    Left = 120
+    Height = 40
+    Top = 335
+    Width = 104
     Anchors = [akLeft, akBottom]
     Caption = 'Применить'
     Enabled = False
@@ -160,10 +161,10 @@ object FormListListen: TFormListListen
   object CancelButton: TButton
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 394
-    Height = 50
-    Top = 419
-    Width = 114
+    Left = 315
+    Height = 40
+    Top = 335
+    Width = 91
     Anchors = [akRight, akBottom]
     Caption = 'Отмена'
     TabOrder = 7
@@ -172,10 +173,10 @@ object FormListListen: TFormListListen
   object RemovePeer: TBitBtn
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 458
-    Height = 50
-    Top = 290
-    Width = 50
+    Left = 366
+    Height = 40
+    Top = 232
+    Width = 40
     Anchors = [akRight, akBottom]
     Cancel = True
     Glyph.Data = {
@@ -238,10 +239,10 @@ object FormListListen: TFormListListen
   end
   object ClearSelection: TButton
     AnchorSideBottom.Side = asrBottom
-    Left = 20
-    Height = 50
-    Top = 290
-    Width = 230
+    Left = 16
+    Height = 40
+    Top = 232
+    Width = 184
     Anchors = [akLeft, akBottom]
     Caption = 'Сбросить выделение'
     TabOrder = 9
@@ -257,8 +258,8 @@ object FormListListen: TFormListListen
     QueryItemIndex = 0
     Text = 'Обновить список пиров и выйти?'
     OnButtonClicked = AtCloseQueryDlgButtonClicked
-    Left = 85
-    Top = 365
+    Left = 68
+    Top = 292
   end
   object RemovePeerDlg: TTaskDialog
     Buttons = <>
@@ -269,7 +270,7 @@ object FormListListen: TFormListListen
     QueryItemIndex = 0
     Text = 'Стереть выделенные адреса из конфигурации?'
     OnButtonClicked = RemovePeerDlgButtonClicked
-    Left = 45
-    Top = 365
+    Left = 36
+    Top = 292
   end
 end

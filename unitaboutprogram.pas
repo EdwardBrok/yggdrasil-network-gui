@@ -56,13 +56,13 @@ begin
 
   //это тоже съезжает в сторону
   with Image1 do begin
-    Left := ceil(FormAboutProgram.Width / 2) - floor(width / 2);
+    Left := ceil(FormAboutProgram.Width / 2) - ceil(width / 2);
   end;
 //  with Image2 do begin
 //    Left := ceil(FormAboutProgram.Width / 2) - ceil(width / 2);
 //  end;
   with PoweredByImage do begin
-    Left := ceil(FormAboutProgram.Width / 2) - floor(width / 2);
+    Left := ceil(FormAboutProgram.Width / 2) - ceil(width / 2);
   end;
   //AppVersionLabel.Caption := Version + AppVersion;
   //AuthorLabel.Caption := Author + 'edikbrok';

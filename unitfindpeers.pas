@@ -81,6 +81,7 @@ type
     Splitter1: TSplitter;
     TimerResponceNotReceived: TTimer;
     procedure FormCreate(Sender: TObject);
+    procedure PanelPleaseWaitClick(Sender: TObject);
     procedure ParsePeersByAnyCountry;
     procedure ParsePeersBySelectedCountry;
     procedure PeersListClick(Sender: TObject);
@@ -489,6 +490,12 @@ begin
   SelectedPeersList := TStringList.Create;
   SelectedPeersList.SortStyle := sslAuto;
 end;
+
+procedure TFormFindPeers.PanelPleaseWaitClick(Sender: TObject);
+begin
+
+end;
+
 {%endregion}
 
 initialization
