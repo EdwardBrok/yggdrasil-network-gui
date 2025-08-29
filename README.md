@@ -16,10 +16,7 @@ The program provides convenient access to network settings and statistics via th
 ### Any system:
 - Yggdrasil Network
 ### 🐧 Linux:
-- Qt5Pas (it should be in your package manager)
-### 🪟 Windows:
-- [Indy's OpenSSL](http://indy.fulgan.com/SSL/) (the 64bit DLLs must be alongside with yggdrasil-gui_windows64.exe)
-  Note: you need only **ssleay32.dll** and **libeay32.dll**. They should be archived in .zip files.   
+- Qt5Pas (it should be in your package manager)  
 
 ---
 
