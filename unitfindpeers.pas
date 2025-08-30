@@ -15,7 +15,7 @@ uses
   StdCtrls,
   ComCtrls,
   Buttons,
-  ExtCtrls, ValEdit, PairSplitter,
+  ExtCtrls, ValEdit, PairSplitter, Grids,
   FPHTTPClient,
   FPJson,
   JsonParser,
@@ -75,13 +75,12 @@ type
     PairSplitterSide2: TPairSplitterSide;
     PanelMain: TPanel;
     PanelPleaseWait: TPanel;
-    PeerParamsList: TValueListEditor;
     ProgressBar: TProgressBar;
     SelectCountry: TComboBox;
     Splitter1: TSplitter;
+    PeerParamsList: TStringGrid;
     TimerResponceNotReceived: TTimer;
     procedure FormCreate(Sender: TObject);
-    procedure PanelPleaseWaitClick(Sender: TObject);
     procedure ParsePeersByAnyCountry;
     procedure ParsePeersBySelectedCountry;
     procedure PeersListClick(Sender: TObject);
@@ -347,14 +346,23 @@ end;
 procedure TFormFindPeers.PeersListSelectionChanged(Sender: TObject);
 var
   StatsEnum: TBaseJSONEnumerator;
+  RowCounter: integer;
 begin
-  PeerParamsList.Clear;
-
-  if (PeersList.SelectionCount = 1) and (PeersList.Selections[0].Parent <> nil) then
+  with PeerParamsList do
   begin
-    statsEnum := FindPeerInJson(PeersList.Selections[0].Parent.Text, peerslist.Selections[0].Text).GetEnumerator;
-    while statsEnum.MoveNext do
-      PeerParamsList.InsertRow(statsenum.Current.Key, statsenum.Current.Value.AsString, true);
+    Clean(0, 1, ColCount - 1, RowCount - 1, [gzNormal]);
+
+    if (PeersList.SelectionCount = 1) and (PeersList.Selections[0].Parent <> nil) then
+    begin
+      statsEnum := FindPeerInJson(PeersList.Selections[0].Parent.Text, peerslist.Selections[0].Text).GetEnumerator;
+      RowCounter := 1;
+      while statsEnum.MoveNext do
+      begin
+        PeerParamsList.Cells[0, RowCounter] := statsenum.Current.Key;
+        PeerParamsList.Cells[1, RowCounter] := statsenum.Current.Value.AsString;
+        inc(RowCounter);
+      end;
+    end;
   end;
 end;
 
@@ -490,12 +498,6 @@ begin
   SelectedPeersList := TStringList.Create;
   SelectedPeersList.SortStyle := sslAuto;
 end;
-
-procedure TFormFindPeers.PanelPleaseWaitClick(Sender: TObject);
-begin
-
-end;
-
 {%endregion}
 
 initialization

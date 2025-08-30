@@ -10,7 +10,7 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="yggdrasil-gui"/>
+            <Filename Value="yggdrasil-gui_win64.exe"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -18,6 +18,7 @@
           </SearchPaths>
           <CodeGeneration>
             <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
@@ -44,7 +45,7 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="yggdrasil-gui"/>
+            <Filename Value="yggdrasil-gui_linux64.x86-64"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -52,6 +53,7 @@
           </SearchPaths>
           <CodeGeneration>
             <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
@@ -92,10 +94,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="UnitMain"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="130"/>
-        <CursorPos Y="21"/>
+        <TopLine Value="249"/>
+        <CursorPos Y="279"/>
         <UsageCount Value="210"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -161,7 +162,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="35"/>
         <CursorPos X="50" Y="51"/>
-        <UsageCount Value="108"/>
+        <UsageCount Value="116"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -175,7 +176,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="83"/>
         <CursorPos Y="106"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="113"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -187,8 +188,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="unitAboutProgram"/>
         <TopLine Value="23"/>
-        <CursorPos X="74" Y="54"/>
-        <UsageCount Value="98"/>
+        <CursorPos X="65" Y="54"/>
+        <UsageCount Value="106"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -198,10 +199,11 @@
         <ComponentName Value="FormFindPeers"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="9"/>
-        <TopLine Value="468"/>
-        <CursorPos X="3" Y="496"/>
-        <UsageCount Value="49"/>
+        <TopLine Value="341"/>
+        <CursorPos X="52" Y="366"/>
+        <UsageCount Value="57"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -458,36 +460,23 @@
         <CursorPos X="5" Y="1291"/>
         <UsageCount Value="13"/>
       </Unit>
+      <Unit>
+        <Filename Value="/usr/lib/lazarus/lcl/grids.pas"/>
+        <UnitName Value="Grids"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="126"/>
+        <CursorPos X="16" Y="143"/>
+        <UsageCount Value="13"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/lib/lazarus/components/vlc/lclvlc.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="74"/>
+        <CursorPos X="47" Y="91"/>
+        <UsageCount Value="10"/>
+      </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="unitfindpeers.pas"/>
-        <Caret Line="484" Column="52" TopLine="461"/>
-      </Position>
-      <Position>
-        <Filename Value="project.lpr"/>
-        <Caret Line="20" Column="22" TopLine="4"/>
-      </Position>
-      <Position>
-        <Filename Value="project.lpr"/>
-        <Caret Line="41" TopLine="6"/>
-      </Position>
-      <Position>
-        <Filename Value="project.lpr"/>
-        <Caret Line="19" Column="26" TopLine="6"/>
-      </Position>
-      <Position>
-        <Filename Value="project.lpr"/>
-        <Caret Line="21" Column="27" TopLine="5"/>
-      </Position>
-      <Position>
-        <Filename Value="project.lpr"/>
-        <Caret Line="20" Column="16" TopLine="6"/>
-      </Position>
-      <Position>
-        <Filename Value="project.lpr"/>
-        <Caret Line="22" Column="32"/>
-      </Position>
       <Position>
         <Filename Value="project.lpr"/>
         <Caret Line="27" Column="32" TopLine="6"/>
@@ -578,7 +567,35 @@
       </Position>
       <Position>
         <Filename Value="unitfindpeers.pas"/>
-        <Caret Line="164" Column="28" TopLine="138"/>
+        <Caret Line="163" Column="25" TopLine="137"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="162" Column="25" TopLine="136"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="353" Column="57" TopLine="332"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="355" Column="19" TopLine="338"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="361" Column="35" TopLine="338"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="361" Column="35" TopLine="338"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="365" TopLine="338"/>
+      </Position>
+      <Position>
+        <Filename Value="unitfindpeers.pas"/>
+        <Caret Line="353" Column="55" TopLine="336"/>
       </Position>
     </JumpHistory>
     <RunParams>
