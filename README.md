@@ -14,17 +14,17 @@ The program provides convenient access to network settings and statistics via th
 ## 📎 Dependencies
 
 ### Any system:
-- Yggdrasil Network
+- [Yggdrasil Network](https://github.com/yggdrasil-network/yggdrasil-go/releases/latest)
 ### 🐧 Linux:
-- Qt5Pas (it should be in your package manager)  
+- [Qt5Pas](https://github.com/davidbannon/libqt5pas/releases/latest) (it should be in your package manager)  
 
 ---
 
 ## 📦 Installation and launch
-1. **Yggdrasil** must be [installed separately](https://yggdrasil-network.github.io/installation.html).  
-2. Download the latest version of **Yggdrasil GUI** from [releases](https://github.com/EdwardBrok/yggdrasil-network-gui/releases).
-3. Satisfy all dependencies for YggGUI on your system.  
-4. Run the executable file (no installation is required).  
+0. **Yggdrasil** must be [installed separately](https://yggdrasil-network.github.io/installation.html) before the usage of this YggGUI.  
+1. Download the latest version of **Yggdrasil GUI** from [releases](https://github.com/EdwardBrok/yggdrasil-network-gui/releases).
+2. Satisfy all dependencies for YggGUI on your system.  
+3. Run the executable file (no installation is required).  
 
 ---
 
