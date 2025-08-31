@@ -43,7 +43,7 @@ type
 
 
 const AppDisplayname: string = 'Yggdrasil GUI';
-const AppVersion : string    = '1.2.3';
+const AppVersion : string    = '1.3.1';
 const SettingsVersionStamp   = '1.3';
 const DefaultLogLevel = 0;
 const LogLevelsInText : Array[0..4] of string = ('DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL');
